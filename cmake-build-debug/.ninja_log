@@ -1,0 +1,16 @@
+# ninja log v6
+46	2137	7531443063518971	CMakeFiles/ArquiII_Proyecto2.dir/main.cpp.obj	e66d086d2116e602
+52	1822	7531442347305757	CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.obj	acefeb32f7b98ba0
+170	3809	7531064773796143	CMakeFiles/ArquiII_Proyecto2.dir/PE.cpp.obj	fb393fab636fda10
+208	2631	7531444718104264	build.ninja	66760a8818742bca
+2138	2835	7531443084402111	ArquiII_Proyecto2.exe	a48da97345bf4358
+120	3590	7531064773301806	CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.obj	e21ab9c2afef5b21
+2649	4684	7531064798594537	CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.obj	ddbda61040d54727
+881	5916	7530978127662532	CMakeFiles/ArquiII_Proyecto2.dir/Tests/SharedMemoryTest.cpp.obj	c3adc7396c946d6f
+34	1039	7531444718104264	build.ninja	66760a8818742bca
+401	2156	7531444724468305	CMakeFiles/ArquiII_Proyecto2.dir/main.cpp.obj	e66d086d2116e602
+2158	2811	7531444742034837	ArquiII_Proyecto2.exe	a48da97345bf4358
+387	6387	7531451973726816	CMakeFiles/ArquiII_Proyecto2.dir/main.cpp.obj	e66d086d2116e602
+639	6536	7531451976247355	CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.obj	acefeb32f7b98ba0
+722	6585	7531451977078452	CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.obj	ddbda61040d54727
+6586	15022	7531452035705872	ArquiII_Proyecto2.exe	a48da97345bf4358
