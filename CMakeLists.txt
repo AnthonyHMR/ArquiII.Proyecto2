@@ -8,4 +8,6 @@ add_executable(ArquiII_Proyecto2 main.cpp
         Cache.h
         SharedMemory.cpp
         SharedMemory.h
+        BusInterconnect.cpp
+        BusInterconnect.h
 )
