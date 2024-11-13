@@ -1,24 +1,29 @@
+// SharedMemory.cpp
 #include "SharedMemory.h"
 #include <stdexcept>
 
-SharedMemory::SharedMemory() : memory(MEMORY_SIZE, 0) {}
+// Constructor
+SharedMemory::SharedMemory(size_t size) : memory(size, 0) {}
 
-// Metodo para leer de la memoria segun la direccion
-uint64_t SharedMemory::read(uint16_t address) {
-    if (address >= MEMORY_SIZE) {
+// Read data from memory
+uint64_t SharedMemory::read(size_t address) const {
+    if (address >= memory.size()) {
         throw std::out_of_range("Address out of range");
     }
-
-    std::lock_guard<std::mutex> lock(memoryMutex); // Bloqueo para acceso seguro
     return memory[address];
 }
 
-// Metodo para escribir en la memoria segun la direccion
-void SharedMemory::write(uint16_t address, uint64_t value) {
-    if (address >= MEMORY_SIZE) {
+// Write data to memory
+void SharedMemory::write(size_t address, uint64_t value) {
+    if (address >= memory.size()) {
         throw std::out_of_range("Address out of range");
     }
-
-    std::lock_guard<std::mutex> lock(memoryMutex); // Bloqueo para acceso seguro
     memory[address] = value;
+}
+
+// Display memory content (for debugging)
+void SharedMemory::displayMemory() const {
+    for (size_t i = 0; i < memory.size(); ++i) {
+        std::cout << "Address [" << i << "]: " << memory[i] << std::endl;
+    }
 }
