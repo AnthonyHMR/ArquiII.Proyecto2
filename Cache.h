@@ -16,6 +16,15 @@ enum class MESIState {
     Invalid
 };
 
+// Enum to represent the type of bus transaction
+enum class BusTransactionType {
+    ReadRequest,
+    ReadResponse,
+    WriteRequest,
+    WriteResponse,
+    Invalidate
+};
+
 // Structure to represent a cache block
 struct CacheBlock {
     uint64_t data[4];
@@ -28,19 +37,23 @@ struct CacheBlock {
 class Cache {
 public:
     // Constructor
-    Cache(size_t numBlocks);
+    Cache(size_t numBlocks, int sourcePE);
 
     // Methods to handle cache operations
-    uint64_t read(uint16_t address);
-    void write(uint16_t address, uint64_t value);
+    int read(uint16_t address);
+    void write(uint16_t address, uint64_t value,  MESIState selectedState);
+    int handleBusTransaction(BusTransactionType type, uint64_t address);
 
     // Métodos para estadísticas
     int getCacheMisses() const;
     int getInvalidations() const;
-    void invalidate(uint16_t address);
+    int getPEId() const;
 
     // Method to display the cache state (for debugging)
     void displayCache() const;
+
+    // Method to find de blockcache index
+    int findBlockIndex(uint16_t address) const;
 
 private:
     static const int NUM_BLOCKS = 8; // Número de bloques de caché
@@ -48,12 +61,12 @@ private:
 
     std::vector<CacheBlock> blocks;
     std::queue<int> fifoQueue; // Cola FIFO para política de reemplazo
+    int PEId; // Id del PE
     int cacheMisses; // Contador de cache misses
     int invalidations; // Contador de invalidaciones
 
     // Helper methods
-    int findBlockIndex(uint16_t address) const;
-    void allocateBlock(uint16_t address, uint64_t value);
+    void allocateBlock(uint16_t address, uint64_t value, MESIState selectedState);
 };
 
 #endif // CACHE_H
