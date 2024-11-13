@@ -1,63 +1,61 @@
+// Cache.cpp
 #include "Cache.h"
 #include <stdexcept>
 
-// Constructor que inicializa la referencia a la memoria compartida
-Cache::Cache(SharedMemory& sharedMemory) : sharedMemory(sharedMemory), cacheBlocks(NUM_BLOCKS), cacheMisses(0), invalidations(0) {
-    for (auto &block : cacheBlocks) {
-        block.valid = false;
-        block.dirty = false;
-    }
-}
+// Constructor
+Cache::Cache(size_t numBlocks) : blocks(numBlocks), cacheMisses(0), invalidations(0)  {}
 
-// Método para leer un dato desde la caché
+// Read operation
 uint64_t Cache::read(uint16_t address) {
-    int blockIndex = findBlock(address);
+    size_t blockIndex = findBlockIndex(address);
 
-    if (blockIndex == -1) { // Miss de caché
+    if (blockIndex == -1) {
         ++cacheMisses;
-        return sharedMemory.read(address); // Política read-through
+        return 0;
     }
 
-    return cacheBlocks[blockIndex].data[address % 4]; // Selección de palabra
+    return blocks[blockIndex].data[address % 4];
 }
 
-// Método para escribir un dato en la caché
+// Write operation
 void Cache::write(uint16_t address, uint64_t value) {
-    int blockIndex = findBlock(address);
+    int blockIndex = findBlockIndex(address);
 
-    if (blockIndex == -1) { // Miss de caché
+    if (blockIndex == -1) {
         ++cacheMisses;
-        replaceBlock(address, value, true); // Política write-allocate
-    } else {
-        // Escribe el valor y marca como modificado (write-back)
-        cacheBlocks[blockIndex].data[address % 4] = value;
-        cacheBlocks[blockIndex].dirty = true;
+        allocateBlock(address, value); // Allocate a block if needed
+    }
+    blocks[blockIndex].state = MESIState::Modified; // Update MESI state
+    blocks[blockIndex].data[address % 4] = value; // Simulate writing data
+}
+
+// Display cache state
+void Cache::displayCache() const {
+    for (size_t i = 0; i < blocks.size(); ++i) {
+        std::cout << "Block " << i << " | Tag: " << blocks[i].tag << " | State: ";
+        switch (blocks[i].state) {
+            case MESIState::Modified: std::cout << "Modified"; break;
+            case MESIState::Exclusive: std::cout << "Exclusive"; break;
+            case MESIState::Shared: std::cout << "Shared"; break;
+            case MESIState::Invalid: std::cout << "Invalid"; break;
+        }
+        std::cout << std::endl;
     }
 }
 
-// Devuelve el número de cache misses
-int Cache::getCacheMisses() const {
-    return cacheMisses;
-}
-
-// Devuelve el número de invalidaciones
-int Cache::getInvalidations() const {
-    return invalidations;
-}
-
-// Encuentra un bloque en la caché
-int Cache::findBlock(uint16_t address) {
-    uint16_t tag = address / 4; // Cálculo simplificado de la etiqueta
+// Find the index of a block based on an address
+int Cache::findBlockIndex(uint16_t address) const {
+    uint16_t tag = address / 4;
     for (int i = 0; i < NUM_BLOCKS; ++i) {
-        if (cacheBlocks[i].valid && cacheBlocks[i].tag == tag) {
-            return i; // Bloque encontrado
+        if (blocks[i].tag == tag && blocks[i].state != MESIState::Invalid) {
+            return i;
         }
     }
-    return -1; // Miss de caché
+    return -1; // Indicate block not found
 }
 
-// Reemplaza un bloque utilizando la política FIFO
-void Cache::replaceBlock(uint16_t address, uint64_t value, bool isWrite) {
+// Allocate a block for a given address
+void Cache::allocateBlock(uint16_t address, uint64_t value) {
     int replaceIndex;
     if (fifoQueue.size() < NUM_BLOCKS) {
         replaceIndex = fifoQueue.size();
@@ -69,26 +67,22 @@ void Cache::replaceBlock(uint16_t address, uint64_t value, bool isWrite) {
     }
 
     // Si el bloque que se reemplaza está modificado (dirty), realizar write-back
-    if (cacheBlocks[replaceIndex].dirty) {
-        writeBack(replaceIndex);
+    if (blocks[replaceIndex].state != MESIState::Invalid) {
+        std::cout << "Hacer writeback" << std::endl;
     }
 
     // Reemplaza el bloque con la nueva dirección y valor
-    cacheBlocks[replaceIndex].valid = true;
-    cacheBlocks[replaceIndex].dirty = isWrite;
-    cacheBlocks[replaceIndex].tag = address / 4; // Etiqueta simplificada
-    cacheBlocks[replaceIndex].data[address % 4] = value; // Almacena el valor si es escritura
+    blocks[replaceIndex].state = MESIState::Exclusive;
+    blocks[replaceIndex].tag = address / 4; // Etiqueta simplificada
+    blocks[replaceIndex].data[address % 4] = value; // Almacena el valor si es escritura
 }
 
-// Realiza write-back al sistema de memoria compartida
-void Cache::writeBack(int blockIndex) {
-    if (!cacheBlocks[blockIndex].valid) return; // No hacer nada si el bloque no es válido
+// Devuelve el número de cache misses
+int Cache::getCacheMisses() const {
+    return cacheMisses;
+}
 
-    uint16_t baseAddress = cacheBlocks[blockIndex].tag * 4; // Calcular dirección base del bloque
-    for (int i = 0; i < 4; ++i) {
-        sharedMemory.write(baseAddress + i, cacheBlocks[blockIndex].data[i]);
-    }
-
-    // Marcar el bloque como limpio después del write-back
-    cacheBlocks[blockIndex].dirty = false;
+// Devuelve el número de invalidaciones
+int Cache::getInvalidations() const {
+    return invalidations;
 }
