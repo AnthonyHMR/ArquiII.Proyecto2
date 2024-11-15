@@ -43,12 +43,19 @@ void BusInterconnect::processReadRequest(size_t sourcePE, uint64_t address) {
     uint64_t data = sharedMemory.read(address);
     ++readResponses;
     dataTransferred += sizeof(data);
+    uint16_t writeBackAddressVal = -1;
+    uint64_t writeBackDataVal = -1;
+    uint16_t* writeBackAddress = &writeBackAddressVal;
+    uint64_t* writeBackData = &writeBackDataVal;
     if(notify == 0) {
-        sourceCache->write(address, data, MESIState::Exclusive);
+        sourceCache->write(address, data, MESIState::Exclusive, writeBackAddress, writeBackData);
     } else {
-        sourceCache->write(address, data, MESIState::Shared);
+        sourceCache->write(address, data, MESIState::Shared, writeBackAddress, writeBackData);
     }
-
+    if (*writeBackAddress != static_cast<uint16_t>(-1) && *writeBackData != static_cast<uint64_t>(-1)) {
+        sharedMemory.write(*writeBackAddress, *writeBackData);
+        std::cout << "PE " << sourcePE << " wroteback data " << *writeBackData << ", to address " << *writeBackData << " in shared memory." << std::endl;
+    }
     std::cout << "PE " << sourcePE << " read address " << address << ", data: " << data << " from shared memory." << std::endl;
 }
 
@@ -56,7 +63,17 @@ void BusInterconnect::processReadRequest(size_t sourcePE, uint64_t address) {
 void BusInterconnect::processWriteRequest(size_t sourcePE, uint64_t address, uint64_t data) {
     for (Cache* cache : connectedCaches) {
         if (cache->getPEId() == sourcePE) {
-            cache->write(address, data, MESIState::Modified);
+            uint16_t writeBackAddressVal = -1;
+            uint64_t writeBackDataVal = -1;
+            uint16_t* writeBackAddress = &writeBackAddressVal;
+            uint64_t* writeBackData = &writeBackDataVal;
+
+            cache->write(address, data, MESIState::Modified, writeBackAddress, writeBackData);
+
+            if (*writeBackAddress != static_cast<uint16_t>(-1) && *writeBackData != static_cast<uint64_t>(-1)) {
+                sharedMemory.write(*writeBackAddress, *writeBackData);
+                std::cout << "PE " << sourcePE << " wroteback data " << *writeBackData << ", to address " << *writeBackData << " in shared memory." << std::endl;
+            }
             ++writeResponses;
             dataTransferred += sizeof(data);
             notifyCaches(BusTransactionType::WriteResponse, sourcePE, address);
@@ -64,13 +81,6 @@ void BusInterconnect::processWriteRequest(size_t sourcePE, uint64_t address, uin
             return;
         }
     }
-
-    // If not in the cache, write directly to shared memory
-    sharedMemory.write(address, data);
-    ++writeResponses;
-    dataTransferred += sizeof(data);
-    notifyCaches(BusTransactionType::WriteResponse, sourcePE, address);
-    std::cout << "PE " << sourcePE << " wrote data " << data << " to address " << address << " in shared memory." << std::endl;
 }
 
 // Notify connected caches of a coherence action

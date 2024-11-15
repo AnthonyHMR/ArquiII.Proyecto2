@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 // Constructor
-Cache::Cache(size_t numBlocks, int sourcePE) : blocks(numBlocks), PEId(sourcePE), cacheMisses(0), invalidations(0)  {}
+Cache::Cache(size_t numBlocks, int sourcePE) : blocks(numBlocks), PEId(sourcePE), cacheMisses(0), invalidations(0), dataTransferred(0) {}
 
 // Read operation
 int Cache::read(uint16_t address) {
@@ -12,17 +12,17 @@ int Cache::read(uint16_t address) {
     if (blockIndex == -1 || blocks[blockIndex].state == MESIState::Invalid) {
         return -1;
     }
-
     return blocks[blockIndex].data[address % 4];
 }
 
 // Write operation
-void Cache::write(uint16_t address, uint64_t value, MESIState selectedState) {
+void Cache::write(uint16_t address, uint64_t value, MESIState selectedState, uint16_t* writeBackAddress, uint64_t* writeBackdata) {
     int blockIndex = findBlockIndex(address);
+    dataTransferred += sizeof(value);
 
     if (blockIndex == -1) {
         ++cacheMisses;
-        allocateBlock(address, value, selectedState); // Allocate a block if needed
+        allocateBlock(address, value, selectedState, writeBackAddress, writeBackdata); // Allocate a block if needed
     }
     blocks[blockIndex].state = selectedState; // Update MESI state
     blocks[blockIndex].data[address % 4] = value; // Simulate writing data
@@ -41,7 +41,6 @@ int Cache::handleBusTransaction(BusTransactionType type, uint64_t address) {
             blocks[blockIndex].state = MESIState::Shared;
             return -1;
         }
-
         blocks[blockIndex].state = MESIState::Shared;
         break;
     case BusTransactionType::WriteResponse:
@@ -58,7 +57,7 @@ int Cache::handleBusTransaction(BusTransactionType type, uint64_t address) {
 // Display cache state
 void Cache::displayCache() const {
     for (size_t i = 0; i < blocks.size(); ++i) {
-        std::cout << "Block " << i << " | Tag: " << blocks[i].tag << " | State: ";
+        std::cout << "Block " << i << " | Tag: " << blocks[i].tag << " | Data: " << *blocks[i].data << " | State: ";
         switch (blocks[i].state) {
             case MESIState::Modified: std::cout << "Modified"; break;
             case MESIState::Exclusive: std::cout << "Exclusive"; break;
@@ -81,7 +80,7 @@ int Cache::findBlockIndex(uint16_t address) const {
 }
 
 // Allocate a block for a given address
-void Cache::allocateBlock(uint16_t address, uint64_t value, MESIState selectedState) {
+void Cache::allocateBlock(uint16_t address, uint64_t value, MESIState selectedState, uint16_t* writeBackAddress, uint64_t* writeBackData) {
     int replaceIndex;
     if (fifoQueue.size() < NUM_BLOCKS) {
         replaceIndex = fifoQueue.size();
@@ -95,6 +94,8 @@ void Cache::allocateBlock(uint16_t address, uint64_t value, MESIState selectedSt
     // Si el bloque que se reemplaza está modificado (dirty), realizar write-back
     if (blocks[replaceIndex].state == MESIState::Modified) {
         std::cout << "Hacer writeback" << std::endl;
+        *writeBackAddress = blocks[replaceIndex].tag*4;
+        *writeBackData = blocks[replaceIndex].data[address % 4];
     }
 
     // Reemplaza el bloque con la nueva dirección y valor
@@ -103,7 +104,7 @@ void Cache::allocateBlock(uint16_t address, uint64_t value, MESIState selectedSt
     blocks[replaceIndex].data[address % 4] = value; // Almacena el valor si es escritura
 }
 
-// Devuelve el número de cache misses
+// Devuelve el id del PE
 int Cache::getPEId() const {
     return PEId;
 }
@@ -116,4 +117,9 @@ int Cache::getCacheMisses() const {
 // Devuelve el número de invalidaciones
 int Cache::getInvalidations() const {
     return invalidations;
+}
+
+// Devuelve el número de datos transferidos
+size_t Cache::getDataTransferred() const {
+    return dataTransferred;
 }

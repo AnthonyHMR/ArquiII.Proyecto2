@@ -21,8 +21,7 @@ enum class BusTransactionType {
     ReadRequest,
     ReadResponse,
     WriteRequest,
-    WriteResponse,
-    Invalidate
+    WriteResponse
 };
 
 // Structure to represent a cache block
@@ -31,7 +30,7 @@ struct CacheBlock {
     uint16_t tag;
     MESIState state;
 
-    CacheBlock() : tag(0), state(MESIState::Invalid) {}
+    CacheBlock() : tag(0), state(MESIState::Invalid) {std::fill(std::begin(data), std::end(data), 0);}
 };
 
 class Cache {
@@ -41,12 +40,13 @@ public:
 
     // Methods to handle cache operations
     int read(uint16_t address);
-    void write(uint16_t address, uint64_t value,  MESIState selectedState);
+    void write(uint16_t address, uint64_t value,  MESIState selectedState, uint16_t* writeBackAddress, uint64_t* writeBackData);
     int handleBusTransaction(BusTransactionType type, uint64_t address);
 
     // Métodos para estadísticas
     int getCacheMisses() const;
     int getInvalidations() const;
+    size_t getDataTransferred() const;
     int getPEId() const;
 
     // Method to display the cache state (for debugging)
@@ -64,9 +64,9 @@ private:
     int PEId; // Id del PE
     int cacheMisses; // Contador de cache misses
     int invalidations; // Contador de invalidaciones
+    size_t dataTransferred;
 
-    // Helper methods
-    void allocateBlock(uint16_t address, uint64_t value, MESIState selectedState);
+    void allocateBlock(uint16_t address, uint64_t value, MESIState selectedState, uint16_t* writeBackAddress, uint64_t* writeBackData);
 };
 
 #endif // CACHE_H
