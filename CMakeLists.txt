@@ -10,4 +10,10 @@ add_executable(ArquiII_Proyecto2 main.cpp
         SharedMemory.h
         BusInterconnect.cpp
         BusInterconnect.h
+        ProcessingElement.cpp
+        ProcessingElement.h
+        InstructionMemory.cpp
+        InstructionMemory.h
+        ArbitrationControl.cpp
+        ArbitrationControl.h
 )
