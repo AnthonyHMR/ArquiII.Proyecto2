@@ -77,11 +77,11 @@ public:
 
             // Crear lista enumerada con scroll
             auto *listWidget1 = new QListWidget(this);
-            listWidget1->addItem("Address\tData\tState");
+            listWidget1->addItem("Address \t Data \t State");
             QList<int> numeros = {101, 202, 303, 404, 505, 606, 707, 808};
             int index = 1;
             for (int numero : numeros) {
-                listWidget1->addItem(QString("[%1]\t%2\t%3").arg(index*4).arg(numero).arg("M"));
+                listWidget1->addItem(QString("[%1] \t %2 \t %3").arg(index*4).arg(numero).arg("M"));
                 index++;
             }
 
@@ -113,11 +113,11 @@ public:
 
             // Crear lista enumerada con scroll
             auto *listWidget1 = new QListWidget(this);
-            listWidget1->addItem("Address\tData\tState");
+            listWidget1->addItem("Address \t Data \t State");
             QList<int> numeros = {101, 202, 303, 404, 505, 606, 707, 808};
             int index = 1;
             for (int numero : numeros) {
-                listWidget1->addItem(QString("[%1]\t%2\t%3").arg(index*4).arg(numero).arg("M"));
+                listWidget1->addItem(QString("[%1] \t %2 \t %3").arg(index*4).arg(numero).arg("M"));
                 index++;
             }
 
@@ -149,11 +149,11 @@ public:
 
             // Crear lista enumerada con scroll
             auto *listWidget1 = new QListWidget(this);
-            listWidget1->addItem("Address\tData\tState");
+            listWidget1->addItem("Address \t Data \t State");
             QList<int> numeros = {101, 202, 303, 404, 505, 606, 707, 808};
             int index = 1;
             for (int numero : numeros) {
-                listWidget1->addItem(QString("[%1]\t%2\t%3").arg(index*4).arg(numero).arg("M"));
+                listWidget1->addItem(QString("[%1] \t %2 \t %3").arg(index*4).arg(numero).arg("M"));
                 index++;
             }
 
@@ -185,11 +185,11 @@ public:
 
             // Crear lista enumerada con scroll
             auto *listWidget1 = new QListWidget(this);
-            listWidget1->addItem("Address\tData\tState");
+            listWidget1->addItem("Address \t Data \t State");
             QList<int> numeros = {101, 202, 303, 404, 505, 606, 707, 808};
             int index = 1;
             for (int numero : numeros) {
-                listWidget1->addItem(QString("[%1]\t%2\t%3").arg(index*4).arg(numero).arg("M"));
+                listWidget1->addItem(QString("[%1] \t %2 \t %3").arg(index*4).arg(numero).arg("M"));
                 index++;
             }
 
@@ -221,11 +221,11 @@ public:
 
             // Crear lista enumerada con scroll
             auto *listWidget1 = new QListWidget(this);
-            listWidget1->addItem("Address\tData");
+            listWidget1->addItem("Address \t Data");
             QList<int> numeros = {101, 202, 303, 404, 505, 606, 707, 808, 909, 1010};
             int index = 1;
             for (int numero : numeros) {
-                listWidget1->addItem(QString("[%1]\t%2").arg(index).arg(numero));
+                listWidget1->addItem(QString("[%1] \t %2").arg(index).arg(numero));
                 index++;
             }
 
@@ -263,7 +263,7 @@ public:
 
         setLayout(mainLayout);
         setWindowTitle("Computer Arquitecture II, Project 2");
-        resize(1300, 500);
+        resize(1385, 500);
     }
 };
 
