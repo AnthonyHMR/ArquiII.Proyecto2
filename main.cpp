@@ -23,10 +23,57 @@
 #include "StaticPriorityScheme.h"
 #include "Compiler.h"
 #include "InstructionMemory.h"
+#include "RoundRobinScheme.h"
+#include "StaticPriorityScheme.h"
 
 class MainWindow : public QWidget {
+private:
+    Compiler compiler;
+    SharedMemory sharedMem;
+    Cache cache1;
+    Cache cache2;
+    Cache cache3;
+    Cache cache4;
+    std::vector<Cache*> caches;
+    BusInterconnect bus;
+    ProcessingElement pe1;
+    ProcessingElement pe2;
+    ProcessingElement pe3;
+    ProcessingElement pe4;
+    std::vector<ProcessingElement*> pes;
+    InstructionMemory mem1;
+    InstructionMemory mem2;
+    InstructionMemory mem3;
+    InstructionMemory mem4;
+    std::vector<int> priorities;
+
+    size_t peValue;
+    int schemeValue;
+
 public:
-    MainWindow(QWidget *parent = nullptr) : QWidget(parent) {
+    MainWindow(QWidget *parent = nullptr) : QWidget(parent),
+    compiler(1),
+    sharedMem(256),
+    cache1(8, 1),
+    cache2(8, 2),
+    cache3(8, 3),
+    cache4(8, 4),
+    caches({&cache1, &cache2, &cache3, &cache4}),
+    bus(sharedMem, caches),
+    pe1(1, &cache1, &bus),
+    pe2(2, &cache2, &bus),
+    pe3(3, &cache3, &bus),
+    pe4(4, &cache4, &bus),
+    pes({&pe1, &pe2, &pe3, &pe4}),
+    mem1(1),
+    mem2(2),
+    mem3(3),
+    mem4(4),
+    priorities({3, 2, 4, 1}),
+    peValue(0),
+    schemeValue(0) {
+
+
         // Crear un layout principal horizontal
         auto *mainLayout = new QHBoxLayout(this);
 
@@ -36,16 +83,14 @@ public:
 
             // Crear un cuadro desplegable para los PEs
             auto *comboBox = new QComboBox(this);
-            comboBox->addItem("Select a Processing Element");
+            comboBox->addItem("Select a PE");
             comboBox->addItem("PE 1");
             comboBox->addItem("PE 2");
             comboBox->addItem("PE 3");
             comboBox->addItem("PE 4");
 
-            size_t peValue = 0;
-
             // Conectar el QComboBox con una lambda para manejar los cambios
-            connect(comboBox, &QComboBox::currentTextChanged, this, [&peValue](const QString &text) {
+            connect(comboBox, &QComboBox::currentTextChanged, this, [this](const QString &text) {
                 if (text == "PE 1") {
                     peValue = 1;
                 } else if (text == "PE 2") {
@@ -66,8 +111,19 @@ public:
 
             // Crear un cuadro desplegable para los PEs
             auto *comboBox2 = new QComboBox(this);
+            comboBox2->addItem("Select an arbitration scheme");
             comboBox2->addItem("Round-Robin");
             comboBox2->addItem("Static Priority");
+
+            connect(comboBox2, &QComboBox::currentTextChanged, this, [this](const QString &text) {
+                if (text == "Round-Robin") {
+                    schemeValue = 1;
+                } else if (text == "Static Priority") {
+                    schemeValue = 2;
+                } else {
+                    schemeValue = 0;
+                }
+            });
 
             // Crear botones
             auto *buttonLayout = new QHBoxLayout();
@@ -79,35 +135,60 @@ public:
             buttonLayout->addWidget(button3);
 
             // Conectar el botón para copiar el texto
-            connect(button1, &QPushButton::clicked, this, [&, textEdit]() {
-                if (peValue >= 1 && peValue <= 4)
+            connect(button1, &QPushButton::clicked, this, [textEdit, this]() {
+                if (peValue > 0)
                 {
-                    Compiler compiler(peValue);
-
                     std::string input = textEdit->toPlainText().toStdString();
                     std::cout << input << std::endl;
                     compiler.compile(input);
 
-                    InstructionMemory mem(peValue);
                     std::cout << "PE elegido: " << peValue << std::endl;
 
-                    mem.addInstructionsVector(compiler.getInstructionsVector());
+                    switch (peValue) {
+                    case 1:
+                        mem1.addInstructionsVector(compiler.getInstructionsVector());
 
-                    compiler.clearInstructions();
-
-                    for (size_t i = 0; i < mem.getInstructionCount(); ++i) {
-                        std::cout << "Instruccion compilada: ";
-                        switch (mem.getInstruction(i).inst) {
-                            case InstructionType::LOAD: std::cout << "LOAD"; break;
-                            case InstructionType::STORE: std::cout << "STORE"; break;
-                            case InstructionType::INC: std::cout << "INC"; break;
-                            case InstructionType::DEC: std::cout << "DEC"; break;
+                        for (size_t i = 0; i < mem1.getInstructionCount(); ++i) {
+                            std::cout << "Instruccion compilada: ";
+                            switch (mem1.getInstruction(i).inst) {
+                                case InstructionType::LOAD: std::cout << "LOAD"; break;
+                                case InstructionType::STORE: std::cout << "STORE"; break;
+                                case InstructionType::INC: std::cout << "INC"; break;
+                                case InstructionType::DEC: std::cout << "DEC"; break;
+                            }
+                            std::cout << " Registro " << mem1.getInstruction(i).reg << " Direccion " << mem1.getInstruction(i).address << std::endl;
                         }
-                        std::cout << " Registro " << mem.getInstruction(i).reg << " Direccion " << mem.getInstruction(i).address << std::endl;
+                        break;
+                    case 2:
+                        mem2.addInstructionsVector(compiler.getInstructionsVector());
+                        break;
+                    case 3:
+                        mem3.addInstructionsVector(compiler.getInstructionsVector());
+                        break;
+                    case 4:
+                        mem4.addInstructionsVector(compiler.getInstructionsVector());
+                        break;
                     }
-                }else
-                {
-                    std::cout << " PE igual a -1" << std::endl;
+                    compiler.clearInstructions();
+                    std::cout << "Compilador limpiado" << std::endl;
+
+                } else {
+                    std::cout << "PE no escogido" << std::endl;
+                }
+            });
+
+            connect(button2, &QPushButton::clicked, this, [this]() {
+                std::vector<InstructionMemory> instructionMemories = {mem1, mem2, mem3, mem4};
+                if (schemeValue == 1) {
+                    RoundRobinScheme roundRobinScheme(instructionMemories, pes);
+                    roundRobinScheme.executeInstructions();
+                    std::cout << "Round Robin" << std::endl;
+                } else if (schemeValue == 2) {
+                    StaticPriorityScheme control(instructionMemories, priorities, pes);
+                    control.executeInstructions();
+                    std::cout << "Prioridad Estatica" << std::endl;
+                } else {
+                    std::cout << "Esquema no escogido" << std::endl;
                 }
             });
 
