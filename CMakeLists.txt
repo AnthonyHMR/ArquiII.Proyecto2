@@ -16,4 +16,6 @@ add_executable(ArquiII_Proyecto2 main.cpp
         InstructionMemory.h
         RoundRobinScheme.cpp
         RoundRobinScheme.h
+        StaticPriorityScheme.cpp
+        StaticPriorityScheme.h
 )
