@@ -14,6 +14,6 @@ add_executable(ArquiII_Proyecto2 main.cpp
         ProcessingElement.h
         InstructionMemory.cpp
         InstructionMemory.h
-        ArbitrationControl.cpp
-        ArbitrationControl.h
+        RoundRobinScheme.cpp
+        RoundRobinScheme.h
 )
