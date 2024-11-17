@@ -14,6 +14,16 @@
 #include <QTableWidgetItem>
 #include <QHeaderView>
 
+#include <vector>
+#include "InstructionMemory.h"
+#include "ProcessingElement.h"
+#include "Cache.h"
+#include "BusInterconnect.h"
+#include "SharedMemory.h"
+#include "StaticPriorityScheme.h"
+#include "Compiler.h"
+#include "InstructionMemory.h"
+
 class MainWindow : public QWidget {
 public:
     MainWindow(QWidget *parent = nullptr) : QWidget(parent) {
@@ -26,10 +36,28 @@ public:
 
             // Crear un cuadro desplegable para los PEs
             auto *comboBox = new QComboBox(this);
+            comboBox->addItem("Select a Processing Element");
             comboBox->addItem("PE 1");
             comboBox->addItem("PE 2");
             comboBox->addItem("PE 3");
             comboBox->addItem("PE 4");
+
+            size_t peValue = 0;
+
+            // Conectar el QComboBox con una lambda para manejar los cambios
+            connect(comboBox, &QComboBox::currentTextChanged, this, [&peValue](const QString &text) {
+                if (text == "PE 1") {
+                    peValue = 1;
+                } else if (text == "PE 2") {
+                    peValue = 2;
+                } else if (text == "PE 3") {
+                    peValue = 3;
+                } else if (text == "PE 4") {
+                    peValue = 4;
+                } else {
+                    peValue = 0;
+                }
+            });
 
             // Crear un cuadro para escribir texto (QTextEdit)
             auto *textEdit = new QTextEdit(this);
@@ -51,8 +79,36 @@ public:
             buttonLayout->addWidget(button3);
 
             // Conectar el botón para copiar el texto
-            connect(button1, &QPushButton::clicked, this, [textEdit]() {
-                std::cout << textEdit->toPlainText().toStdString() << std::endl;
+            connect(button1, &QPushButton::clicked, this, [&, textEdit]() {
+                if (peValue >= 1 && peValue <= 4)
+                {
+                    Compiler compiler(peValue);
+
+                    std::string input = textEdit->toPlainText().toStdString();
+                    std::cout << input << std::endl;
+                    compiler.compile(input);
+
+                    InstructionMemory mem(peValue);
+                    std::cout << "PE elegido: " << peValue << std::endl;
+
+                    mem.addInstructionsVector(compiler.getInstructionsVector());
+
+                    compiler.clearInstructions();
+
+                    for (size_t i = 0; i < mem.getInstructionCount(); ++i) {
+                        std::cout << "Instruccion compilada: ";
+                        switch (mem.getInstruction(i).inst) {
+                            case InstructionType::LOAD: std::cout << "LOAD"; break;
+                            case InstructionType::STORE: std::cout << "STORE"; break;
+                            case InstructionType::INC: std::cout << "INC"; break;
+                            case InstructionType::DEC: std::cout << "DEC"; break;
+                        }
+                        std::cout << " Registro " << mem.getInstruction(i).reg << " Direccion " << mem.getInstruction(i).address << std::endl;
+                    }
+                }else
+                {
+                    std::cout << " PE igual a -1" << std::endl;
+                }
             });
 
             // Conectar el botón para copiar el texto

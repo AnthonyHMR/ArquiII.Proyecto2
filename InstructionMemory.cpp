@@ -16,6 +16,10 @@ size_t InstructionMemory::getInstructionCount() const {
     return instructions.size();
 }
 
+void InstructionMemory::addInstructionsVector(std::vector<instruction> instructionsVector) {
+    instructions = instructionsVector;
+}
+
 size_t InstructionMemory::getPEId() const {
     return peId;
 }

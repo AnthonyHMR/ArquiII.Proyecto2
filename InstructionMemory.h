@@ -27,6 +27,7 @@ class InstructionMemory {
 public:
     InstructionMemory(size_t peId);
     void addInstruction(const instruction& instruction);
+    void addInstructionsVector(std::vector<instruction> instructionsVector);
     instruction getInstruction(size_t index) const;
     size_t getInstructionCount() const;
     size_t getPEId() const;

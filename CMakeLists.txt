@@ -14,7 +14,24 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(ArquiII_Proyecto2 main.cpp)
+add_executable(ArquiII_Proyecto2 main.cpp
+        Cache.cpp
+        Cache.h
+        SharedMemory.cpp
+        SharedMemory.h
+        BusInterconnect.cpp
+        BusInterconnect.h
+        ProcessingElement.cpp
+        ProcessingElement.h
+        InstructionMemory.cpp
+        InstructionMemory.h
+        RoundRobinScheme.cpp
+        RoundRobinScheme.h
+        StaticPriorityScheme.cpp
+        StaticPriorityScheme.h
+        Compiler.cpp
+        Compiler.h
+)
 target_link_libraries(ArquiII_Proyecto2
         Qt::Core
         Qt::Gui
