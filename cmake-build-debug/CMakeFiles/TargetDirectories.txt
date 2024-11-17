@@ -1,0 +1,5 @@
+C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/cmake-build-debug/CMakeFiles/ArquiII_Proyecto2.dir
+C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/cmake-build-debug/CMakeFiles/ArquiII_Proyecto2_autogen_timestamp_deps.dir
+C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/cmake-build-debug/CMakeFiles/ArquiII_Proyecto2_autogen.dir
