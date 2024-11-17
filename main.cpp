@@ -1,3 +1,4 @@
+#include <iostream>
 #include <QApplication>
 #include <QWidget>
 #include <QVBoxLayout>
@@ -38,7 +39,7 @@ public:
             // Crear un cuadro desplegable para los PEs
             auto *comboBox2 = new QComboBox(this);
             comboBox2->addItem("Round-Robin");
-            comboBox2->addItem("Esquema 2");
+            comboBox2->addItem("Static Priority");
 
             // Crear botones
             auto *buttonLayout = new QHBoxLayout();
@@ -48,6 +49,11 @@ public:
             buttonLayout->addWidget(button1);
             buttonLayout->addWidget(button2);
             buttonLayout->addWidget(button3);
+
+            // Conectar el botón para copiar el texto
+            connect(button1, &QPushButton::clicked, this, [textEdit]() {
+                std::cout << textEdit->toPlainText().toStdString() << std::endl;
+            });
 
             // Conectar el botón para copiar el texto
             /*connect(button1, &QPushButton::clicked, this, [textEdit, textFixed]() {
@@ -245,13 +251,11 @@ public:
             // Añadir widgets al layout de la columna
             columnLayout->addWidget(new QLabel("Shared Memory", this));
             columnLayout->addWidget(listWidget1);
-            columnLayout->addWidget(new QLabel("Bus Interconnect Statistics", this));
+            columnLayout->addWidget(new QLabel("Bus Interconnect Statistics:", this));
             columnLayout->addWidget(tableWidget);
 
             return columnLayout;
         };
-
-
 
         // Crear dos columnas y añadirlas al layout principal
         mainLayout->addLayout(createColumn1());
