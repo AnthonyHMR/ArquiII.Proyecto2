@@ -54,7 +54,7 @@ void BusInterconnect::processReadRequest(size_t sourcePE, uint64_t address) {
     }
     if (*writeBackAddress != static_cast<uint16_t>(-1) && *writeBackData != static_cast<uint64_t>(-1)) {
         sharedMemory.write(*writeBackAddress, *writeBackData);
-        std::cout << "PE " << sourcePE << " wroteback data " << *writeBackData << ", to address " << *writeBackData << " in shared memory." << std::endl;
+        std::cout << "PE " << sourcePE << " wroteback data " << *writeBackData << ", to address " << *writeBackAddress << " in shared memory." << std::endl;
     }
     std::cout << "PE " << sourcePE << " read address " << address << ", data: " << data << " from shared memory." << std::endl;
 }
@@ -108,4 +108,24 @@ void BusInterconnect::displayStatistics() const {
     std::cout << "Write Responses: " << writeResponses << std::endl;
     std::cout << "Invalidations: " << invalidations << std::endl;
     std::cout << "Data Transferred: " << dataTransferred << " bytes" << std::endl;
+}
+
+// Devuelve el número de invalidaciones
+size_t BusInterconnect::getInvalidations() const {
+    return invalidations;
+}
+
+// Devuelve el número de cache misses
+size_t BusInterconnect::getReadRequests() const {
+    return readRequests;
+}
+
+// Devuelve el número de cache misses
+size_t BusInterconnect::getWriteRequests() const {
+    return writeRequests;
+}
+
+// Devuelve el número de datos transferidos
+size_t BusInterconnect::getDataTransfered() const {
+    return dataTransferred;
 }

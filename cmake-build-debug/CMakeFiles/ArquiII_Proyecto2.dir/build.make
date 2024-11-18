@@ -98,16 +98,169 @@ CMakeFiles/ArquiII_Proyecto2.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ArquiII_Proyecto2.dir/main.cpp.s"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\main.cpp -o CMakeFiles\ArquiII_Proyecto2.dir\main.cpp.s
 
+CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/flags.make
+CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/includes_CXX.rsp
+CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.obj: C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/Cache.cpp
+CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.obj -MF CMakeFiles\ArquiII_Proyecto2.dir\Cache.cpp.obj.d -o CMakeFiles\ArquiII_Proyecto2.dir\Cache.cpp.obj -c C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\Cache.cpp
+
+CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\Cache.cpp > CMakeFiles\ArquiII_Proyecto2.dir\Cache.cpp.i
+
+CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\Cache.cpp -o CMakeFiles\ArquiII_Proyecto2.dir\Cache.cpp.s
+
+CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/flags.make
+CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/includes_CXX.rsp
+CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.obj: C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/SharedMemory.cpp
+CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.obj -MF CMakeFiles\ArquiII_Proyecto2.dir\SharedMemory.cpp.obj.d -o CMakeFiles\ArquiII_Proyecto2.dir\SharedMemory.cpp.obj -c C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\SharedMemory.cpp
+
+CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\SharedMemory.cpp > CMakeFiles\ArquiII_Proyecto2.dir\SharedMemory.cpp.i
+
+CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\SharedMemory.cpp -o CMakeFiles\ArquiII_Proyecto2.dir\SharedMemory.cpp.s
+
+CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/flags.make
+CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/includes_CXX.rsp
+CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.obj: C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/BusInterconnect.cpp
+CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.obj -MF CMakeFiles\ArquiII_Proyecto2.dir\BusInterconnect.cpp.obj.d -o CMakeFiles\ArquiII_Proyecto2.dir\BusInterconnect.cpp.obj -c C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\BusInterconnect.cpp
+
+CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\BusInterconnect.cpp > CMakeFiles\ArquiII_Proyecto2.dir\BusInterconnect.cpp.i
+
+CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\BusInterconnect.cpp -o CMakeFiles\ArquiII_Proyecto2.dir\BusInterconnect.cpp.s
+
+CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/flags.make
+CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/includes_CXX.rsp
+CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.obj: C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/ProcessingElement.cpp
+CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.obj -MF CMakeFiles\ArquiII_Proyecto2.dir\ProcessingElement.cpp.obj.d -o CMakeFiles\ArquiII_Proyecto2.dir\ProcessingElement.cpp.obj -c C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\ProcessingElement.cpp
+
+CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\ProcessingElement.cpp > CMakeFiles\ArquiII_Proyecto2.dir\ProcessingElement.cpp.i
+
+CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\ProcessingElement.cpp -o CMakeFiles\ArquiII_Proyecto2.dir\ProcessingElement.cpp.s
+
+CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/flags.make
+CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/includes_CXX.rsp
+CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.obj: C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/InstructionMemory.cpp
+CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.obj -MF CMakeFiles\ArquiII_Proyecto2.dir\InstructionMemory.cpp.obj.d -o CMakeFiles\ArquiII_Proyecto2.dir\InstructionMemory.cpp.obj -c C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\InstructionMemory.cpp
+
+CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\InstructionMemory.cpp > CMakeFiles\ArquiII_Proyecto2.dir\InstructionMemory.cpp.i
+
+CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\InstructionMemory.cpp -o CMakeFiles\ArquiII_Proyecto2.dir\InstructionMemory.cpp.s
+
+CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/flags.make
+CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/includes_CXX.rsp
+CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.obj: C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/RoundRobinScheme.cpp
+CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.obj -MF CMakeFiles\ArquiII_Proyecto2.dir\RoundRobinScheme.cpp.obj.d -o CMakeFiles\ArquiII_Proyecto2.dir\RoundRobinScheme.cpp.obj -c C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\RoundRobinScheme.cpp
+
+CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\RoundRobinScheme.cpp > CMakeFiles\ArquiII_Proyecto2.dir\RoundRobinScheme.cpp.i
+
+CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\RoundRobinScheme.cpp -o CMakeFiles\ArquiII_Proyecto2.dir\RoundRobinScheme.cpp.s
+
+CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/flags.make
+CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/includes_CXX.rsp
+CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.obj: C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/StaticPriorityScheme.cpp
+CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.obj -MF CMakeFiles\ArquiII_Proyecto2.dir\StaticPriorityScheme.cpp.obj.d -o CMakeFiles\ArquiII_Proyecto2.dir\StaticPriorityScheme.cpp.obj -c C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\StaticPriorityScheme.cpp
+
+CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\StaticPriorityScheme.cpp > CMakeFiles\ArquiII_Proyecto2.dir\StaticPriorityScheme.cpp.i
+
+CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\StaticPriorityScheme.cpp -o CMakeFiles\ArquiII_Proyecto2.dir\StaticPriorityScheme.cpp.s
+
+CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/flags.make
+CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/includes_CXX.rsp
+CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.obj: C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/Compiler.cpp
+CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.obj -MF CMakeFiles\ArquiII_Proyecto2.dir\Compiler.cpp.obj.d -o CMakeFiles\ArquiII_Proyecto2.dir\Compiler.cpp.obj -c C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\Compiler.cpp
+
+CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\Compiler.cpp > CMakeFiles\ArquiII_Proyecto2.dir\Compiler.cpp.i
+
+CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\Compiler.cpp -o CMakeFiles\ArquiII_Proyecto2.dir\Compiler.cpp.s
+
+CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/flags.make
+CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/includes_CXX.rsp
+CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.obj: C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/MainWindow.cpp
+CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.obj: CMakeFiles/ArquiII_Proyecto2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.obj -MF CMakeFiles\ArquiII_Proyecto2.dir\MainWindow.cpp.obj.d -o CMakeFiles\ArquiII_Proyecto2.dir\MainWindow.cpp.obj -c C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\MainWindow.cpp
+
+CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\MainWindow.cpp > CMakeFiles\ArquiII_Proyecto2.dir\MainWindow.cpp.i
+
+CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\MainWindow.cpp -o CMakeFiles\ArquiII_Proyecto2.dir\MainWindow.cpp.s
+
 # Object files for target ArquiII_Proyecto2
 ArquiII_Proyecto2_OBJECTS = \
 "CMakeFiles/ArquiII_Proyecto2.dir/ArquiII_Proyecto2_autogen/mocs_compilation.cpp.obj" \
-"CMakeFiles/ArquiII_Proyecto2.dir/main.cpp.obj"
+"CMakeFiles/ArquiII_Proyecto2.dir/main.cpp.obj" \
+"CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.obj" \
+"CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.obj" \
+"CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.obj" \
+"CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.obj" \
+"CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.obj" \
+"CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.obj" \
+"CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.obj" \
+"CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.obj" \
+"CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.obj"
 
 # External object files for target ArquiII_Proyecto2
 ArquiII_Proyecto2_EXTERNAL_OBJECTS =
 
 ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/ArquiII_Proyecto2_autogen/mocs_compilation.cpp.obj
 ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/main.cpp.obj
+ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.obj
+ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.obj
+ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.obj
+ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.obj
+ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.obj
+ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.obj
+ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.obj
+ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.obj
+ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.obj
 ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/build.make
 ArquiII_Proyecto2.exe: C:/Qt/6.8.0/mingw_64/lib/libQt6Widgets.a
 ArquiII_Proyecto2.exe: C:/Qt/6.8.0/mingw_64/lib/libQt6Gui.a
@@ -115,7 +268,7 @@ ArquiII_Proyecto2.exe: C:/Qt/6.8.0/mingw_64/lib/libQt6Core.a
 ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/linkLibs.rsp
 ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/objects1.rsp
 ArquiII_Proyecto2.exe: CMakeFiles/ArquiII_Proyecto2.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable ArquiII_Proyecto2.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\antho\OneDrive\Escritorio\Proyecto_ArquiII\ArquiII.Proyecto2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable ArquiII_Proyecto2.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\ArquiII_Proyecto2.dir\link.txt --verbose=$(VERBOSE)
 	"C:\Program Files\JetBrains\CLion 2024.2.2\bin\cmake\win\x64\bin\cmake.exe" -E make_directory C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/cmake-build-debug/plugins/platforms/
 	"C:\Program Files\JetBrains\CLion 2024.2.2\bin\cmake\win\x64\bin\cmake.exe" -E copy C:\Qt\6.8.0\mingw_64/plugins/platforms/qwindows.dll C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/cmake-build-debug/plugins/platforms/

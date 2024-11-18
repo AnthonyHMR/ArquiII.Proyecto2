@@ -178,6 +178,222 @@ ArquiII_Proyecto2_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/ArquiII_Proyecto2_autogen/mocs_compilation.cpp.s
 .PHONY : ArquiII_Proyecto2_autogen/mocs_compilation.cpp.s
 
+BusInterconnect.obj: BusInterconnect.cpp.obj
+.PHONY : BusInterconnect.obj
+
+# target to build an object file
+BusInterconnect.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.obj
+.PHONY : BusInterconnect.cpp.obj
+
+BusInterconnect.i: BusInterconnect.cpp.i
+.PHONY : BusInterconnect.i
+
+# target to preprocess a source file
+BusInterconnect.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.i
+.PHONY : BusInterconnect.cpp.i
+
+BusInterconnect.s: BusInterconnect.cpp.s
+.PHONY : BusInterconnect.s
+
+# target to generate assembly for a file
+BusInterconnect.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/BusInterconnect.cpp.s
+.PHONY : BusInterconnect.cpp.s
+
+Cache.obj: Cache.cpp.obj
+.PHONY : Cache.obj
+
+# target to build an object file
+Cache.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.obj
+.PHONY : Cache.cpp.obj
+
+Cache.i: Cache.cpp.i
+.PHONY : Cache.i
+
+# target to preprocess a source file
+Cache.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.i
+.PHONY : Cache.cpp.i
+
+Cache.s: Cache.cpp.s
+.PHONY : Cache.s
+
+# target to generate assembly for a file
+Cache.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/Cache.cpp.s
+.PHONY : Cache.cpp.s
+
+Compiler.obj: Compiler.cpp.obj
+.PHONY : Compiler.obj
+
+# target to build an object file
+Compiler.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.obj
+.PHONY : Compiler.cpp.obj
+
+Compiler.i: Compiler.cpp.i
+.PHONY : Compiler.i
+
+# target to preprocess a source file
+Compiler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.i
+.PHONY : Compiler.cpp.i
+
+Compiler.s: Compiler.cpp.s
+.PHONY : Compiler.s
+
+# target to generate assembly for a file
+Compiler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/Compiler.cpp.s
+.PHONY : Compiler.cpp.s
+
+InstructionMemory.obj: InstructionMemory.cpp.obj
+.PHONY : InstructionMemory.obj
+
+# target to build an object file
+InstructionMemory.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.obj
+.PHONY : InstructionMemory.cpp.obj
+
+InstructionMemory.i: InstructionMemory.cpp.i
+.PHONY : InstructionMemory.i
+
+# target to preprocess a source file
+InstructionMemory.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.i
+.PHONY : InstructionMemory.cpp.i
+
+InstructionMemory.s: InstructionMemory.cpp.s
+.PHONY : InstructionMemory.s
+
+# target to generate assembly for a file
+InstructionMemory.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/InstructionMemory.cpp.s
+.PHONY : InstructionMemory.cpp.s
+
+MainWindow.obj: MainWindow.cpp.obj
+.PHONY : MainWindow.obj
+
+# target to build an object file
+MainWindow.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.obj
+.PHONY : MainWindow.cpp.obj
+
+MainWindow.i: MainWindow.cpp.i
+.PHONY : MainWindow.i
+
+# target to preprocess a source file
+MainWindow.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.i
+.PHONY : MainWindow.cpp.i
+
+MainWindow.s: MainWindow.cpp.s
+.PHONY : MainWindow.s
+
+# target to generate assembly for a file
+MainWindow.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/MainWindow.cpp.s
+.PHONY : MainWindow.cpp.s
+
+ProcessingElement.obj: ProcessingElement.cpp.obj
+.PHONY : ProcessingElement.obj
+
+# target to build an object file
+ProcessingElement.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.obj
+.PHONY : ProcessingElement.cpp.obj
+
+ProcessingElement.i: ProcessingElement.cpp.i
+.PHONY : ProcessingElement.i
+
+# target to preprocess a source file
+ProcessingElement.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.i
+.PHONY : ProcessingElement.cpp.i
+
+ProcessingElement.s: ProcessingElement.cpp.s
+.PHONY : ProcessingElement.s
+
+# target to generate assembly for a file
+ProcessingElement.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/ProcessingElement.cpp.s
+.PHONY : ProcessingElement.cpp.s
+
+RoundRobinScheme.obj: RoundRobinScheme.cpp.obj
+.PHONY : RoundRobinScheme.obj
+
+# target to build an object file
+RoundRobinScheme.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.obj
+.PHONY : RoundRobinScheme.cpp.obj
+
+RoundRobinScheme.i: RoundRobinScheme.cpp.i
+.PHONY : RoundRobinScheme.i
+
+# target to preprocess a source file
+RoundRobinScheme.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.i
+.PHONY : RoundRobinScheme.cpp.i
+
+RoundRobinScheme.s: RoundRobinScheme.cpp.s
+.PHONY : RoundRobinScheme.s
+
+# target to generate assembly for a file
+RoundRobinScheme.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/RoundRobinScheme.cpp.s
+.PHONY : RoundRobinScheme.cpp.s
+
+SharedMemory.obj: SharedMemory.cpp.obj
+.PHONY : SharedMemory.obj
+
+# target to build an object file
+SharedMemory.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.obj
+.PHONY : SharedMemory.cpp.obj
+
+SharedMemory.i: SharedMemory.cpp.i
+.PHONY : SharedMemory.i
+
+# target to preprocess a source file
+SharedMemory.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.i
+.PHONY : SharedMemory.cpp.i
+
+SharedMemory.s: SharedMemory.cpp.s
+.PHONY : SharedMemory.s
+
+# target to generate assembly for a file
+SharedMemory.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/SharedMemory.cpp.s
+.PHONY : SharedMemory.cpp.s
+
+StaticPriorityScheme.obj: StaticPriorityScheme.cpp.obj
+.PHONY : StaticPriorityScheme.obj
+
+# target to build an object file
+StaticPriorityScheme.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.obj
+.PHONY : StaticPriorityScheme.cpp.obj
+
+StaticPriorityScheme.i: StaticPriorityScheme.cpp.i
+.PHONY : StaticPriorityScheme.i
+
+# target to preprocess a source file
+StaticPriorityScheme.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.i
+.PHONY : StaticPriorityScheme.cpp.i
+
+StaticPriorityScheme.s: StaticPriorityScheme.cpp.s
+.PHONY : StaticPriorityScheme.s
+
+# target to generate assembly for a file
+StaticPriorityScheme.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ArquiII_Proyecto2.dir\build.make CMakeFiles/ArquiII_Proyecto2.dir/StaticPriorityScheme.cpp.s
+.PHONY : StaticPriorityScheme.cpp.s
+
 main.obj: main.cpp.obj
 .PHONY : main.obj
 
@@ -216,6 +432,33 @@ help:
 	@echo ... ArquiII_Proyecto2_autogen/mocs_compilation.obj
 	@echo ... ArquiII_Proyecto2_autogen/mocs_compilation.i
 	@echo ... ArquiII_Proyecto2_autogen/mocs_compilation.s
+	@echo ... BusInterconnect.obj
+	@echo ... BusInterconnect.i
+	@echo ... BusInterconnect.s
+	@echo ... Cache.obj
+	@echo ... Cache.i
+	@echo ... Cache.s
+	@echo ... Compiler.obj
+	@echo ... Compiler.i
+	@echo ... Compiler.s
+	@echo ... InstructionMemory.obj
+	@echo ... InstructionMemory.i
+	@echo ... InstructionMemory.s
+	@echo ... MainWindow.obj
+	@echo ... MainWindow.i
+	@echo ... MainWindow.s
+	@echo ... ProcessingElement.obj
+	@echo ... ProcessingElement.i
+	@echo ... ProcessingElement.s
+	@echo ... RoundRobinScheme.obj
+	@echo ... RoundRobinScheme.i
+	@echo ... RoundRobinScheme.s
+	@echo ... SharedMemory.obj
+	@echo ... SharedMemory.i
+	@echo ... SharedMemory.s
+	@echo ... StaticPriorityScheme.obj
+	@echo ... StaticPriorityScheme.i
+	@echo ... StaticPriorityScheme.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

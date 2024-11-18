@@ -226,7 +226,63 @@
 	"CROSS_CONFIG" : false,
 	"DEP_FILE" : "C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/cmake-build-debug/ArquiII_Proyecto2_autogen/deps",
 	"DEP_FILE_RULE_NAME" : "ArquiII_Proyecto2_autogen/timestamp",
-	"HEADERS" : [],
+	"HEADERS" : 
+	[
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/BusInterconnect.h",
+			"MU",
+			"EWIEGA46WW/moc_BusInterconnect.cpp",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/Cache.h",
+			"MU",
+			"EWIEGA46WW/moc_Cache.cpp",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/Compiler.h",
+			"MU",
+			"EWIEGA46WW/moc_Compiler.cpp",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/InstructionMemory.h",
+			"MU",
+			"EWIEGA46WW/moc_InstructionMemory.cpp",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/MainWindow.h",
+			"MU",
+			"EWIEGA46WW/moc_MainWindow.cpp",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/ProcessingElement.h",
+			"MU",
+			"EWIEGA46WW/moc_ProcessingElement.cpp",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/RoundRobinScheme.h",
+			"MU",
+			"EWIEGA46WW/moc_RoundRobinScheme.cpp",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/SharedMemory.h",
+			"MU",
+			"EWIEGA46WW/moc_SharedMemory.cpp",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/StaticPriorityScheme.h",
+			"MU",
+			"EWIEGA46WW/moc_StaticPriorityScheme.cpp",
+			null
+		]
+	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/cmake-build-debug/ArquiII_Proyecto2_autogen/include",
 	"MOC_COMPILATION_FILE" : "C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/cmake-build-debug/ArquiII_Proyecto2_autogen/mocs_compilation.cpp",
@@ -298,6 +354,51 @@
 	"SETTINGS_FILE" : "C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/cmake-build-debug/CMakeFiles/ArquiII_Proyecto2_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/BusInterconnect.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/Cache.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/Compiler.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/InstructionMemory.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/MainWindow.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/ProcessingElement.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/RoundRobinScheme.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/SharedMemory.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/StaticPriorityScheme.cpp",
+			"MU",
+			null
+		],
 		[
 			"C:/Users/antho/OneDrive/Escritorio/Proyecto_ArquiII/ArquiII.Proyecto2/main.cpp",
 			"MU",

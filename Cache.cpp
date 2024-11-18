@@ -68,6 +68,8 @@ void Cache::displayCache() const {
     }
 }
 
+
+
 // Find the index of a block based on an address
 int Cache::findBlockIndex(uint16_t address) const {
     uint16_t tag = address / 4;
@@ -102,6 +104,10 @@ void Cache::allocateBlock(uint16_t address, uint64_t value, MESIState selectedSt
     blocks[replaceIndex].state = selectedState;
     blocks[replaceIndex].tag = address / 4; // Etiqueta simplificada
     blocks[replaceIndex].data[address % 4] = value; // Almacena el valor si es escritura
+}
+
+std::vector<CacheBlock> Cache::getCacheBlocks() const {
+    return blocks;
 }
 
 // Devuelve el id del PE

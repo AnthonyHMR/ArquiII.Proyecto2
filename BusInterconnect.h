@@ -29,6 +29,11 @@ public:
     // Method to display bus statistics
     void displayStatistics() const;
 
+    size_t getInvalidations() const;
+    size_t getDataTransfered() const;
+    size_t getReadRequests() const;
+    size_t getWriteRequests() const;
+
 private:
     SharedMemory& sharedMemory;
     std::vector<Cache*> connectedCaches;

@@ -27,3 +27,7 @@ void SharedMemory::displayMemory() const {
         std::cout << "Address [" << i << "]: " << memory[i] << std::endl;
     }
 }
+
+std::vector<uint64_t> SharedMemory::getWholeMemory() const {
+    return memory;
+}

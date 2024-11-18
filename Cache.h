@@ -49,6 +49,8 @@ public:
     size_t getDataTransferred() const;
     int getPEId() const;
 
+    std::vector<CacheBlock> getCacheBlocks() const;
+
     // Method to display the cache state (for debugging)
     void displayCache() const;
 

@@ -31,6 +31,8 @@ add_executable(ArquiII_Proyecto2 main.cpp
         StaticPriorityScheme.h
         Compiler.cpp
         Compiler.h
+        MainWindow.cpp
+        MainWindow.h
 )
 target_link_libraries(ArquiII_Proyecto2
         Qt::Core

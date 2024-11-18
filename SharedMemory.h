@@ -18,6 +18,8 @@ public:
     // Method to display the memory content (for debugging)
     void displayMemory() const;
 
+    std::vector<uint64_t> getWholeMemory() const;
+
 private:
     std::vector<uint64_t> memory;
 };
