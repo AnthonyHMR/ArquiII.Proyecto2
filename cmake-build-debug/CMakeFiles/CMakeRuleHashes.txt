@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+b5b0d6f9092d49c522d9a36c9a771bbb ArquiII_Proyecto2_autogen/timestamp
+ebde388421aa572dbf22d3ef36187493 CMakeFiles/ArquiII_Proyecto2_autogen
