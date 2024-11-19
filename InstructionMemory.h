@@ -31,6 +31,7 @@ public:
     instruction getInstruction(size_t index) const;
     size_t getInstructionCount() const;
     size_t getPEId() const;
+    void clear();
 
 private:
     size_t peId;

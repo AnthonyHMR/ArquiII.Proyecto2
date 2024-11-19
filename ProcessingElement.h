@@ -35,6 +35,8 @@ public:
     void jnz(int reg_index, int target_address);
 
     int getId() const;
+
+    void clear();
 };
 
 #endif // PROCESSING_ELEMENT_H

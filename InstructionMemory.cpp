@@ -23,3 +23,7 @@ void InstructionMemory::addInstructionsVector(std::vector<instruction> instructi
 size_t InstructionMemory::getPEId() const {
     return peId;
 }
+
+void InstructionMemory::clear () {
+    std::fill(instructions.begin(), instructions.end(), instruction(InstructionType::LOAD, 0, 0));
+}

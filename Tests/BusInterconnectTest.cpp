@@ -38,7 +38,9 @@ int main() {
     bus.handleTransaction(BusEvent(BusTransactionType::WriteRequest, 1, 28, 11));
     bus.handleTransaction(BusEvent(BusTransactionType::WriteRequest, 1, 32, 2));
     bus.handleTransaction(BusEvent(BusTransactionType::WriteRequest, 1, 36, 8));
-    bus.handleTransaction(BusEvent(BusTransactionType::ReadRequest, 3, 36));
+    bus.handleTransaction(BusEvent(BusTransactionType::ReadRequest, 3, 37));
+    bus.handleTransaction(BusEvent(BusTransactionType::ReadRequest, 2, 40));
+
 
     // Display the cache state
     std::cout << "Cache 1" << std::endl;

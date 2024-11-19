@@ -64,3 +64,7 @@ void ProcessingElement::jnz(int reg_index, int target_address) {
 int ProcessingElement::getId() const {
     return id;
 }
+
+void ProcessingElement::clear() {
+    std::fill(std::begin(registers), std::end(registers), 0);
+}

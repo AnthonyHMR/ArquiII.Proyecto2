@@ -1,5 +1,7 @@
 // Cache.cpp
 #include "Cache.h"
+
+#include <array>
 #include <stdexcept>
 
 // Constructor
@@ -16,16 +18,31 @@ int Cache::read(uint16_t address) {
 }
 
 // Write operation
-void Cache::write(uint16_t address, uint64_t value, MESIState selectedState, uint16_t* writeBackAddress, uint64_t* writeBackdata) {
+void Cache::write(uint16_t address, uint64_t value, MESIState selectedState) {
     int blockIndex = findBlockIndex(address);
     dataTransferred += sizeof(value);
 
     if (blockIndex == -1) {
-        ++cacheMisses;
-        allocateBlock(address, value, selectedState, writeBackAddress, writeBackdata); // Allocate a block if needed
+        std::cout << "*** Alerta: La direccion no esta en cache" << std::endl;
+        //allocateBlock(address, value, selectedState, writeBackAddress, writeBackData); // Allocate a block if needed
     }
     blocks[blockIndex].state = selectedState; // Update MESI state
     blocks[blockIndex].data[address % 4] = value; // Simulate writing data
+}
+
+uint64_t* Cache::readBlock(uint16_t address) {
+    int blockIndex = findBlockIndex(address);
+
+    if (blockIndex == -1 || blocks[blockIndex].state == MESIState::Invalid) {
+        std::cout << "*** Alerta: La direccion no esta en cache" << std::endl;
+    }
+
+    static uint64_t blockData[4];
+    for (int i = 0; i < 4; ++i) {
+        blockData[i] = blocks[blockIndex].data[i];
+    }
+
+    return blockData;
 }
 
 // handleBusTransaction operation
@@ -82,7 +99,9 @@ int Cache::findBlockIndex(uint16_t address) const {
 }
 
 // Allocate a block for a given address
-void Cache::allocateBlock(uint16_t address, uint64_t value, MESIState selectedState, uint16_t* writeBackAddress, uint64_t* writeBackData) {
+void Cache::allocateBlock(uint16_t address, std::array<uint64_t, 4> value, MESIState selectedState, uint16_t* writeBackAddress, uint64_t (*writeBackData)[4]) {
+    ++cacheMisses;
+    dataTransferred += sizeof(value);
     int replaceIndex;
     if (fifoQueue.size() < NUM_BLOCKS) {
         replaceIndex = fifoQueue.size();
@@ -97,13 +116,18 @@ void Cache::allocateBlock(uint16_t address, uint64_t value, MESIState selectedSt
     if (blocks[replaceIndex].state == MESIState::Modified) {
         std::cout << "Hacer writeback" << std::endl;
         *writeBackAddress = blocks[replaceIndex].tag*4;
-        *writeBackData = blocks[replaceIndex].data[address % 4];
+        for (int i = 0; i < 4; ++i) {
+            (*writeBackData)[i] = blocks[replaceIndex].data[i];
+        }
     }
 
     // Reemplaza el bloque con la nueva dirección y valor
     blocks[replaceIndex].state = selectedState;
     blocks[replaceIndex].tag = address / 4; // Etiqueta simplificada
-    blocks[replaceIndex].data[address % 4] = value; // Almacena el valor si es escritura
+    // Almacena el valor
+    for (int i = 0; i < 4; ++i) {
+        blocks[replaceIndex].data[i] = value[i];
+    }
 }
 
 std::vector<CacheBlock> Cache::getCacheBlocks() const {
@@ -128,4 +152,15 @@ int Cache::getInvalidations() const {
 // Devuelve el número de datos transferidos
 size_t Cache::getDataTransferred() const {
     return dataTransferred;
+}
+
+void Cache::clear()
+{
+    std::fill(blocks.begin(), blocks.end(), CacheBlock());
+    while (!fifoQueue.empty()) {
+        fifoQueue.pop();
+    }
+    cacheMisses = 0;
+    invalidations = 0;
+    dataTransferred = 0;
 }

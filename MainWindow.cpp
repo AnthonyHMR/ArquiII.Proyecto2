@@ -28,7 +28,7 @@ MainWindow::MainWindow(
 
     setLayout(mainLayout);
     setWindowTitle("Computer Architecture II, Project 2");
-    resize(1385, 500);
+    resize(1100, 500);
 }
 
 QVBoxLayout* MainWindow::createColumn1() {
@@ -94,12 +94,32 @@ QVBoxLayout* MainWindow::createColumn1() {
     textFixed->setPlaceholderText("Executed Instruction");
     textFixed->setFixedHeight(button1->height());
 
+    auto *buttonReset = new QPushButton("Reset", this);
+
+    connect(buttonReset, &QPushButton::clicked, this, [this]() {
+        sharedMem.clear();
+        caches[0]->clear();
+        caches[1]->clear();
+        caches[2]->clear();
+        caches[3]->clear();
+        instructionMemories[0].clear();
+        instructionMemories[1].clear();
+        instructionMemories[2].clear();
+        instructionMemories[3].clear();
+        bus.clear();
+        pes[0]->clear();
+        pes[1]->clear();
+        pes[2]->clear();
+        pes[3]->clear();
+    });
+
     columnLayout->addWidget(comboBox);
     columnLayout->addWidget(new QLabel("Instructions:", this));
     columnLayout->addWidget(textEdit);
     columnLayout->addWidget(comboBox2);
     columnLayout->addLayout(buttonLayout);
     columnLayout->addWidget(textFixed);
+    columnLayout->addWidget(buttonReset);
 
     return columnLayout;
 }
@@ -109,7 +129,7 @@ QVBoxLayout* MainWindow::createColumn2() {
 
     // Lista de datos de la caché
     auto *cacheList = new QListWidget(this);
-    cacheList->addItem("Address \t Data \t State");
+    cacheList->addItem("Address \t Data");
 
     auto *buttonUpdate = new QPushButton("Update", this);
 
@@ -122,20 +142,26 @@ QVBoxLayout* MainWindow::createColumn2() {
     {
         cacheList->clear(); // Limpiar la lista antes de actualizar
 
-        cacheList->addItem("Address \t Data \t State");
+        cacheList->addItem("Address \t Data");
 
         std::vector<CacheBlock> blocks = caches[0]->getCacheBlocks();
+
+        int index = 0;
         for (CacheBlock block : blocks) {
-            cacheList->addItem(QString("[%1] \t %2 \t %3")
-                .arg(block.tag*4)
-                .arg(block.data[(block.tag*4) % 4])
+            cacheList->addItem(QString("\nBlock [%1]: (%2)").arg(index)
                 .arg(block.state == MESIState::Modified ? "Modified" :
-                    block.state == MESIState::Exclusive ? "Exclusive" :
-                    block.state == MESIState::Shared ? "Shared" : "Invalid"));
+                        block.state == MESIState::Exclusive ? "Exclusive" :
+                        block.state == MESIState::Shared ? "Shared" : "Invalid"));
+            for (int i = 0;  i < 4; ++i) {
+                cacheList->addItem(QString("[0x%1] \t %2")
+                    .arg(block.tag == 0 ? 0 : block.tag*4 + i, 0, 16).toUpper()
+                    .arg(block.data[block.tag*4%4 + i]));
+            }
+            ++index;
         }
         statsTable->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(caches[0]->getCacheMisses())));
         statsTable->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(caches[0]->getInvalidations())));
-        statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1").arg(caches[0]->getDataTransferred())));
+        statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1 bytes").arg(caches[0]->getDataTransferred())));
 
         std::cout << "Cache 1:" << std::endl;
         caches[0]->displayCache();
@@ -158,7 +184,7 @@ QVBoxLayout* MainWindow::createColumn3() {
 
     // Lista de datos de la caché
     auto *cacheList = new QListWidget(this);
-    cacheList->addItem("Address \t Data \t State");
+    cacheList->addItem("Address \t Data");
 
     auto *buttonUpdate = new QPushButton("Update", this);
 
@@ -171,20 +197,26 @@ QVBoxLayout* MainWindow::createColumn3() {
     {
         cacheList->clear(); // Limpiar la lista antes de actualizar
 
-        cacheList->addItem("Address \t Data \t State");
+        cacheList->addItem("Address \t Data");
 
         std::vector<CacheBlock> blocks = caches[1]->getCacheBlocks();
+
+        int index = 0;
         for (CacheBlock block : blocks) {
-            cacheList->addItem(QString("[%1] \t %2 \t %3")
-                .arg(block.tag*4)
-                .arg(block.data[(block.tag*4) % 4])
+            cacheList->addItem(QString("\nBlock [%1]: (%2)").arg(index)
                 .arg(block.state == MESIState::Modified ? "Modified" :
-                    block.state == MESIState::Exclusive ? "Exclusive" :
-                    block.state == MESIState::Shared ? "Shared" : "Invalid"));
+                        block.state == MESIState::Exclusive ? "Exclusive" :
+                        block.state == MESIState::Shared ? "Shared" : "Invalid"));
+            for (int i = 0;  i < 4; ++i) {
+                cacheList->addItem(QString("[0x%1] \t %2")
+                    .arg(block.tag == 0 ? 0 : block.tag*4 + i, 0, 16).toUpper()
+                    .arg(block.data[block.tag*4%4 + i]));
+            }
+            ++index;
         }
         statsTable->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(caches[1]->getCacheMisses())));
         statsTable->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(caches[1]->getInvalidations())));
-        statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1").arg(caches[1]->getDataTransferred())));
+        statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1 bytes").arg(caches[1]->getDataTransferred())));
 
         std::cout << "Cache 2:" << std::endl;
         caches[1]->displayCache();
@@ -207,7 +239,7 @@ QVBoxLayout* MainWindow::createColumn4() {
 
     // Lista de datos de la caché
     auto *cacheList = new QListWidget(this);
-    cacheList->addItem("Address \t Data \t State");
+    cacheList->addItem("Address \t Data");
 
     auto *buttonUpdate = new QPushButton("Update", this);
 
@@ -220,20 +252,26 @@ QVBoxLayout* MainWindow::createColumn4() {
     {
         cacheList->clear(); // Limpiar la lista antes de actualizar
 
-        cacheList->addItem("Address \t Data \t State");
+        cacheList->addItem("Address \t Data");
 
         std::vector<CacheBlock> blocks = caches[2]->getCacheBlocks();
+
+        int index = 0;
         for (CacheBlock block : blocks) {
-            cacheList->addItem(QString("[%1] \t %2 \t %3")
-                .arg(block.tag*4)
-                .arg(block.data[(block.tag*4) % 4])
+            cacheList->addItem(QString("\nBlock [%1]: (%2)").arg(index)
                 .arg(block.state == MESIState::Modified ? "Modified" :
-                    block.state == MESIState::Exclusive ? "Exclusive" :
-                    block.state == MESIState::Shared ? "Shared" : "Invalid"));
+                        block.state == MESIState::Exclusive ? "Exclusive" :
+                        block.state == MESIState::Shared ? "Shared" : "Invalid"));
+            for (int i = 0;  i < 4; ++i) {
+                cacheList->addItem(QString("[0x%1] \t %2")
+                    .arg(block.tag == 0 ? 0 : block.tag*4 + i, 0, 16).toUpper()
+                    .arg(block.data[block.tag*4%4 + i]));
+            }
+            ++index;
         }
         statsTable->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(caches[2]->getCacheMisses())));
         statsTable->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(caches[2]->getInvalidations())));
-        statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1").arg(caches[2]->getDataTransferred())));
+        statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1 bytes").arg(caches[2]->getDataTransferred())));
 
         std::cout << "Cache 3:" << std::endl;
         caches[2]->displayCache();
@@ -256,7 +294,7 @@ QVBoxLayout* MainWindow::createColumn5() {
 
     // Lista de datos de la caché
     auto *cacheList = new QListWidget(this);
-    cacheList->addItem("Address \t Data \t State");
+    cacheList->addItem("Address \t Data");
 
     auto *buttonUpdate = new QPushButton("Update", this);
 
@@ -269,20 +307,26 @@ QVBoxLayout* MainWindow::createColumn5() {
     {
         cacheList->clear(); // Limpiar la lista antes de actualizar
 
-        cacheList->addItem("Address \t Data \t State");
+        cacheList->addItem("Address \t Data");
 
         std::vector<CacheBlock> blocks = caches[3]->getCacheBlocks();
+
+        int index = 0;
         for (CacheBlock block : blocks) {
-            cacheList->addItem(QString("[%1] \t %2 \t %3")
-                .arg(block.tag*4)
-                .arg(block.data[(block.tag*4) % 4])
+            cacheList->addItem(QString("\nBlock [%1]: (%2)").arg(index)
                 .arg(block.state == MESIState::Modified ? "Modified" :
-                    block.state == MESIState::Exclusive ? "Exclusive" :
-                    block.state == MESIState::Shared ? "Shared" : "Invalid"));
+                        block.state == MESIState::Exclusive ? "Exclusive" :
+                        block.state == MESIState::Shared ? "Shared" : "Invalid"));
+            for (int i = 0;  i < 4; ++i) {
+                cacheList->addItem(QString("[0x%1] \t %2")
+                    .arg(block.tag == 0 ? 0 : block.tag*4 + i, 0, 16).toUpper()
+                    .arg(block.data[block.tag*4%4 + i]));
+            }
+            ++index;
         }
         statsTable->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(caches[3]->getCacheMisses())));
         statsTable->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(caches[3]->getInvalidations())));
-        statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1").arg(caches[3]->getDataTransferred())));
+        statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1 bytes").arg(caches[3]->getDataTransferred())));
 
         std::cout << "Cache 4:" << std::endl;
         caches[3]->displayCache();
@@ -324,14 +368,14 @@ QVBoxLayout* MainWindow::createColumn6() {
         int index = 0;
         for (uint64_t mem : memory) {
             sharedMemList->addItem(QString("[%1] \t %2 ")
-                .arg(index)
+                .arg(index, 0, 16).toUpper()
                 .arg(mem));
             ++index;
         }
         statsTable->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(bus.getReadRequests())));
         statsTable->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(bus.getWriteRequests())));
         statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1").arg(bus.getInvalidations())));
-        statsTable->setItem(0, 3, new QTableWidgetItem(QString("%1").arg(bus.getDataTransfered())));
+        statsTable->setItem(0, 3, new QTableWidgetItem(QString("%1 bytes").arg(bus.getDataTransfered())));
 
         std::cout << "Shared Memory:" << std::endl;
         sharedMem.displayMemory();

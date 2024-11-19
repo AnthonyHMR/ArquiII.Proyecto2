@@ -40,14 +40,18 @@ public:
 
     // Methods to handle cache operations
     int read(uint16_t address);
-    void write(uint16_t address, uint64_t value,  MESIState selectedState, uint16_t* writeBackAddress, uint64_t* writeBackData);
+    void write(uint16_t address, uint64_t value,  MESIState selectedState);
     int handleBusTransaction(BusTransactionType type, uint64_t address);
+    void allocateBlock(uint16_t address, std::array<uint64_t, 4> value, MESIState selectedState, uint16_t* writeBackAddress, uint64_t (*writeBackData)[4]);
+    uint64_t* readBlock(uint16_t address);
 
     // Métodos para estadísticas
     int getCacheMisses() const;
     int getInvalidations() const;
     size_t getDataTransferred() const;
     int getPEId() const;
+
+    void clear();
 
     std::vector<CacheBlock> getCacheBlocks() const;
 
@@ -68,7 +72,6 @@ private:
     int invalidations; // Contador de invalidaciones
     size_t dataTransferred;
 
-    void allocateBlock(uint16_t address, uint64_t value, MESIState selectedState, uint16_t* writeBackAddress, uint64_t* writeBackData);
 };
 
 #endif // CACHE_H

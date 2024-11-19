@@ -34,6 +34,8 @@ public:
     size_t getReadRequests() const;
     size_t getWriteRequests() const;
 
+    void clear();
+
 private:
     SharedMemory& sharedMemory;
     std::vector<Cache*> connectedCaches;
