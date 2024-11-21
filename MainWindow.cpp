@@ -3,6 +3,7 @@
 #include <thread>
 #include <iostream>
 #include <QHeaderView>
+#include <QMessageBox>
 
 MainWindow::MainWindow(
     SharedMemory& sharedMem,
@@ -26,6 +27,8 @@ MainWindow::MainWindow(
     mainLayout->addLayout(createColumn5());
     mainLayout->addLayout(createColumn6());
 
+    updateSystem();
+
     setLayout(mainLayout);
     setWindowTitle("Computer Architecture II, Project 2");
     resize(1100, 500);
@@ -37,7 +40,7 @@ QVBoxLayout* MainWindow::createColumn1() {
     auto *comboBox = new QComboBox(this);
     comboBox->addItems({"Select a PE", "PE 1", "PE 2", "PE 3", "PE 4"});
     connect(comboBox, &QComboBox::currentTextChanged, this, [this](const QString &text) {
-        peValue = text.contains("PE") ? text.split(" ")[1].toInt() : 0;
+        peValue = text == "PE 1" ? 1 : (text == "PE 2" ? 2 : (text == "PE 3" ? 3 : (text == "PE 4" ? 4 : 0)));
     });
 
     auto *textEdit = new QTextEdit(this);
@@ -59,6 +62,11 @@ QVBoxLayout* MainWindow::createColumn1() {
     buttonLayout->addWidget(button2);
     buttonLayout->addWidget(button3);
 
+    // Crear un cuadro de texto fijo (QPlainTextEdit)
+    textFixed->setReadOnly(true); // Hacerlo no editable
+    textFixed->setPlaceholderText("Executed Instruction");
+    textFixed->setFixedHeight(button1->height());
+
     connect(button1, &QPushButton::clicked, this, [textEdit, this]() {
         if (peValue > 0) {
             std::string input = textEdit->toPlainText().toStdString();
@@ -70,7 +78,8 @@ QVBoxLayout* MainWindow::createColumn1() {
                 case 4: instructionMemories[3].addInstructionsVector(compiler.getInstructionsVector()); break;
             }
             compiler.clearInstructions();
-        }
+            QMessageBox::information(this, "Notification!", QString("PE %1 code has been compiled successfully!").arg(peValue));
+        } else {QMessageBox::information(this, "Warning!", "Choose a PE to compile the code.");}
     });
 
     connect(button2, &QPushButton::clicked, this, [this]() {
@@ -78,39 +87,59 @@ QVBoxLayout* MainWindow::createColumn1() {
             std::thread([this]() {
                 RoundRobinScheme scheme(instructionMemories, pes);
                 scheme.executeInstructions();
-                //caches[0]->displayCache();
+                QMetaObject::invokeMethod(this, [this]() {
+                    updateSystem();
+                }, Qt::QueuedConnection);
             }).detach();
+            QMessageBox::information(this, "Notification!", "The instructions have been executed successfully!");
         } else if (schemeValue == 2) {
             std::thread([this]() {
                 StaticPriorityScheme scheme(instructionMemories, priorities, pes);
                 scheme.executeInstructions();
+                QMetaObject::invokeMethod(this, [this]() {
+                    updateSystem();
+                }, Qt::QueuedConnection);
             }).detach();
-        }
+            QMessageBox::information(this, "Notification!", "The instructions have been executed successfully!");
+        } else {QMessageBox::information(this, "Warning!", "Choose a scheme scheduling to execute the instructions.");}
     });
 
-    // Crear un cuadro de texto fijo (QPlainTextEdit)
-    auto *textFixed = new QPlainTextEdit(this);
-    textFixed->setReadOnly(true); // Hacerlo no editable
-    textFixed->setPlaceholderText("Executed Instruction");
-    textFixed->setFixedHeight(button1->height());
+    connect(button3, &QPushButton::clicked, this, [this, button2, button1]()
+    {
+        button2->setEnabled(false);
+        button1->setEnabled(false);
+        if (instructionMemories[0].getInstructionCount() == indexInst[0] &&
+                    instructionMemories[1].getInstructionCount() == indexInst[1] &&
+                    instructionMemories[2].getInstructionCount() == indexInst[2] &&
+                    instructionMemories[3].getInstructionCount() == indexInst[3])
+        {
+            std::cout << "All the instructions have been executed" << std::endl;
+            QMetaObject::invokeMethod(this, [this]() {
+                QMessageBox::information(this, "Notification!", "All the instructions in memory have been executed successfully!");
+                textFixed->clear();
+                textFixed->setPlaceholderText("Executed Instruction");
+            }, Qt::QueuedConnection);
+            button2->setEnabled(true);
+            button1->setEnabled(true);
+            indexMem = 0;
+            indexInst = {0, 0, 0, 0};
+        } else
+        {
+            if (schemeValue == 1) {
+                roundRobinSteppingExecute();
+                ++indexMem;
+            } else if (schemeValue == 2) {
+                staticPrioritySteppingExecute();
+            }
+        }
+        updateSystem();
+    });
 
     auto *buttonReset = new QPushButton("Reset", this);
 
     connect(buttonReset, &QPushButton::clicked, this, [this]() {
-        sharedMem.clear();
-        caches[0]->clear();
-        caches[1]->clear();
-        caches[2]->clear();
-        caches[3]->clear();
-        instructionMemories[0].clear();
-        instructionMemories[1].clear();
-        instructionMemories[2].clear();
-        instructionMemories[3].clear();
-        bus.clear();
-        pes[0]->clear();
-        pes[1]->clear();
-        pes[2]->clear();
-        pes[3]->clear();
+        clearSystem();
+        QMessageBox::information(this, "Alert!", "The system has been reset!");
     });
 
     columnLayout->addWidget(comboBox);
@@ -128,53 +157,19 @@ QVBoxLayout* MainWindow::createColumn2() {
     auto *columnLayout = new QVBoxLayout();
 
     // Lista de datos de la caché
-    auto *cacheList = new QListWidget(this);
-    cacheList->addItem("Address \t Data");
-
-    auto *buttonUpdate = new QPushButton("Update", this);
+    cacheList1->addItem("Address \t Data");
 
     // Estadísticas
-    auto *statsTable = new QTableWidget(1, 3, this);
-    statsTable->setHorizontalHeaderLabels({"Misses", "Invalidations", "Data Transferred"});
-    statsTable->setItem(0, 0, new QTableWidgetItem(""));
+    statsTable1->setHorizontalHeaderLabels({"Misses", "Invalidations", "Data Transferred"});
+    statsTable1->setItem(0, 0, new QTableWidgetItem(""));
 
-    connect(buttonUpdate, &QPushButton::clicked, this, [this, cacheList, statsTable]()
-    {
-        cacheList->clear(); // Limpiar la lista antes de actualizar
-
-        cacheList->addItem("Address \t Data");
-
-        std::vector<CacheBlock> blocks = caches[0]->getCacheBlocks();
-
-        int index = 0;
-        for (CacheBlock block : blocks) {
-            cacheList->addItem(QString("\nBlock [%1]: (%2)").arg(index)
-                .arg(block.state == MESIState::Modified ? "Modified" :
-                        block.state == MESIState::Exclusive ? "Exclusive" :
-                        block.state == MESIState::Shared ? "Shared" : "Invalid"));
-            for (int i = 0;  i < 4; ++i) {
-                cacheList->addItem(QString("[0x%1] \t %2")
-                    .arg(block.tag == 0 ? 0 : block.tag*4 + i, 0, 16).toUpper()
-                    .arg(block.data[block.tag*4%4 + i]));
-            }
-            ++index;
-        }
-        statsTable->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(caches[0]->getCacheMisses())));
-        statsTable->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(caches[0]->getInvalidations())));
-        statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1 bytes").arg(caches[0]->getDataTransferred())));
-
-        std::cout << "Cache 1:" << std::endl;
-        caches[0]->displayCache();
-    });
-
-    statsTable->setFixedHeight(statsTable->verticalHeader()->length() + statsTable->horizontalHeader()->height() + statsTable->horizontalHeader()->height());
+    statsTable1->setFixedHeight(statsTable1->verticalHeader()->length() + statsTable1->horizontalHeader()->height() + statsTable1->horizontalHeader()->height());
 
 
     columnLayout->addWidget(new QLabel("Cache 1", this));
-    columnLayout->addWidget(cacheList);
-    columnLayout->addWidget(buttonUpdate);
+    columnLayout->addWidget(cacheList1);
     columnLayout->addWidget(new QLabel("Statistics:", this));
-    columnLayout->addWidget(statsTable);
+    columnLayout->addWidget(statsTable1);
 
     return columnLayout;
 }
@@ -183,53 +178,18 @@ QVBoxLayout* MainWindow::createColumn3() {
     auto *columnLayout = new QVBoxLayout();
 
     // Lista de datos de la caché
-    auto *cacheList = new QListWidget(this);
-    cacheList->addItem("Address \t Data");
-
-    auto *buttonUpdate = new QPushButton("Update", this);
+    cacheList2->addItem("Address \t Data");
 
     // Estadísticas
-    auto *statsTable = new QTableWidget(1, 3, this);
-    statsTable->setHorizontalHeaderLabels({"Misses", "Invalidations", "Data Transferred"});
-    statsTable->setItem(0, 0, new QTableWidgetItem(""));
+    statsTable2->setHorizontalHeaderLabels({"Misses", "Invalidations", "Data Transferred"});
+    statsTable2->setItem(0, 0, new QTableWidgetItem(""));
 
-    connect(buttonUpdate, &QPushButton::clicked, this, [this, cacheList, statsTable]()
-    {
-        cacheList->clear(); // Limpiar la lista antes de actualizar
-
-        cacheList->addItem("Address \t Data");
-
-        std::vector<CacheBlock> blocks = caches[1]->getCacheBlocks();
-
-        int index = 0;
-        for (CacheBlock block : blocks) {
-            cacheList->addItem(QString("\nBlock [%1]: (%2)").arg(index)
-                .arg(block.state == MESIState::Modified ? "Modified" :
-                        block.state == MESIState::Exclusive ? "Exclusive" :
-                        block.state == MESIState::Shared ? "Shared" : "Invalid"));
-            for (int i = 0;  i < 4; ++i) {
-                cacheList->addItem(QString("[0x%1] \t %2")
-                    .arg(block.tag == 0 ? 0 : block.tag*4 + i, 0, 16).toUpper()
-                    .arg(block.data[block.tag*4%4 + i]));
-            }
-            ++index;
-        }
-        statsTable->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(caches[1]->getCacheMisses())));
-        statsTable->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(caches[1]->getInvalidations())));
-        statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1 bytes").arg(caches[1]->getDataTransferred())));
-
-        std::cout << "Cache 2:" << std::endl;
-        caches[1]->displayCache();
-    });
-
-    statsTable->setFixedHeight(statsTable->verticalHeader()->length() + statsTable->horizontalHeader()->height() + statsTable->horizontalHeader()->height());
-
+    statsTable2->setFixedHeight(statsTable2->verticalHeader()->length() + statsTable2->horizontalHeader()->height() + statsTable2->horizontalHeader()->height());
 
     columnLayout->addWidget(new QLabel("Cache 2", this));
-    columnLayout->addWidget(cacheList);
-    columnLayout->addWidget(buttonUpdate);
+    columnLayout->addWidget(cacheList2);
     columnLayout->addWidget(new QLabel("Statistics:", this));
-    columnLayout->addWidget(statsTable);
+    columnLayout->addWidget(statsTable2);
 
     return columnLayout;
 }
@@ -238,53 +198,18 @@ QVBoxLayout* MainWindow::createColumn4() {
     auto *columnLayout = new QVBoxLayout();
 
     // Lista de datos de la caché
-    auto *cacheList = new QListWidget(this);
-    cacheList->addItem("Address \t Data");
-
-    auto *buttonUpdate = new QPushButton("Update", this);
+    cacheList3->addItem("Address \t Data");
 
     // Estadísticas
-    auto *statsTable = new QTableWidget(1, 3, this);
-    statsTable->setHorizontalHeaderLabels({"Misses", "Invalidations", "Data Transferred"});
-    statsTable->setItem(0, 0, new QTableWidgetItem(""));
+    statsTable3->setHorizontalHeaderLabels({"Misses", "Invalidations", "Data Transferred"});
+    statsTable3->setItem(0, 0, new QTableWidgetItem(""));
 
-    connect(buttonUpdate, &QPushButton::clicked, this, [this, cacheList, statsTable]()
-    {
-        cacheList->clear(); // Limpiar la lista antes de actualizar
-
-        cacheList->addItem("Address \t Data");
-
-        std::vector<CacheBlock> blocks = caches[2]->getCacheBlocks();
-
-        int index = 0;
-        for (CacheBlock block : blocks) {
-            cacheList->addItem(QString("\nBlock [%1]: (%2)").arg(index)
-                .arg(block.state == MESIState::Modified ? "Modified" :
-                        block.state == MESIState::Exclusive ? "Exclusive" :
-                        block.state == MESIState::Shared ? "Shared" : "Invalid"));
-            for (int i = 0;  i < 4; ++i) {
-                cacheList->addItem(QString("[0x%1] \t %2")
-                    .arg(block.tag == 0 ? 0 : block.tag*4 + i, 0, 16).toUpper()
-                    .arg(block.data[block.tag*4%4 + i]));
-            }
-            ++index;
-        }
-        statsTable->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(caches[2]->getCacheMisses())));
-        statsTable->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(caches[2]->getInvalidations())));
-        statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1 bytes").arg(caches[2]->getDataTransferred())));
-
-        std::cout << "Cache 3:" << std::endl;
-        caches[2]->displayCache();
-    });
-
-    statsTable->setFixedHeight(statsTable->verticalHeader()->length() + statsTable->horizontalHeader()->height() + statsTable->horizontalHeader()->height());
-
+    statsTable3->setFixedHeight(statsTable3->verticalHeader()->length() + statsTable3->horizontalHeader()->height() + statsTable3->horizontalHeader()->height());
 
     columnLayout->addWidget(new QLabel("Cache 3", this));
-    columnLayout->addWidget(cacheList);
-    columnLayout->addWidget(buttonUpdate);
+    columnLayout->addWidget(cacheList3);
     columnLayout->addWidget(new QLabel("Statistics:", this));
-    columnLayout->addWidget(statsTable);
+    columnLayout->addWidget(statsTable3);
 
     return columnLayout;
 }
@@ -293,53 +218,18 @@ QVBoxLayout* MainWindow::createColumn5() {
     auto *columnLayout = new QVBoxLayout();
 
     // Lista de datos de la caché
-    auto *cacheList = new QListWidget(this);
-    cacheList->addItem("Address \t Data");
-
-    auto *buttonUpdate = new QPushButton("Update", this);
+    cacheList4->addItem("Address \t Data");
 
     // Estadísticas
-    auto *statsTable = new QTableWidget(1, 3, this);
-    statsTable->setHorizontalHeaderLabels({"Misses", "Invalidations", "Data Transferred"});
-    statsTable->setItem(0, 0, new QTableWidgetItem(""));
+    statsTable4->setHorizontalHeaderLabels({"Misses", "Invalidations", "Data Transferred"});
+    statsTable4->setItem(0, 0, new QTableWidgetItem(""));
 
-    connect(buttonUpdate, &QPushButton::clicked, this, [this, cacheList, statsTable]()
-    {
-        cacheList->clear(); // Limpiar la lista antes de actualizar
-
-        cacheList->addItem("Address \t Data");
-
-        std::vector<CacheBlock> blocks = caches[3]->getCacheBlocks();
-
-        int index = 0;
-        for (CacheBlock block : blocks) {
-            cacheList->addItem(QString("\nBlock [%1]: (%2)").arg(index)
-                .arg(block.state == MESIState::Modified ? "Modified" :
-                        block.state == MESIState::Exclusive ? "Exclusive" :
-                        block.state == MESIState::Shared ? "Shared" : "Invalid"));
-            for (int i = 0;  i < 4; ++i) {
-                cacheList->addItem(QString("[0x%1] \t %2")
-                    .arg(block.tag == 0 ? 0 : block.tag*4 + i, 0, 16).toUpper()
-                    .arg(block.data[block.tag*4%4 + i]));
-            }
-            ++index;
-        }
-        statsTable->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(caches[3]->getCacheMisses())));
-        statsTable->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(caches[3]->getInvalidations())));
-        statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1 bytes").arg(caches[3]->getDataTransferred())));
-
-        std::cout << "Cache 4:" << std::endl;
-        caches[3]->displayCache();
-    });
-
-    statsTable->setFixedHeight(statsTable->verticalHeader()->length() + statsTable->horizontalHeader()->height() + statsTable->horizontalHeader()->height());
-
+    statsTable4->setFixedHeight(statsTable4->verticalHeader()->length() + statsTable4->horizontalHeader()->height() + statsTable4->horizontalHeader()->height());
 
     columnLayout->addWidget(new QLabel("Cache 4", this));
-    columnLayout->addWidget(cacheList);
-    columnLayout->addWidget(buttonUpdate);
+    columnLayout->addWidget(cacheList4);
     columnLayout->addWidget(new QLabel("Statistics:", this));
-    columnLayout->addWidget(statsTable);
+    columnLayout->addWidget(statsTable4);
 
     return columnLayout;
 }
@@ -348,46 +238,226 @@ QVBoxLayout* MainWindow::createColumn6() {
     auto *columnLayout = new QVBoxLayout();
 
     // Lista de datos de la memoria
-    auto *sharedMemList = new QListWidget(this);
     sharedMemList->addItem("Address \t Data");
 
-    auto *buttonUpdate = new QPushButton("Update", this);
-
-
-
-    auto *statsTable = new QTableWidget(1, 4, this);
     statsTable->setHorizontalHeaderLabels({"Read Requests", "Write Requests", "Invalidations", "Data Transferred"});
-
-    connect(buttonUpdate, &QPushButton::clicked, this, [this, sharedMemList, statsTable]()
-    {
-        sharedMemList->clear(); // Limpiar la lista antes de actualizar
-
-        sharedMemList->addItem("Address \t Data");
-
-        std::vector<uint64_t> memory = sharedMem.getWholeMemory();
-        int index = 0;
-        for (uint64_t mem : memory) {
-            sharedMemList->addItem(QString("[%1] \t %2 ")
-                .arg(index, 0, 16).toUpper()
-                .arg(mem));
-            ++index;
-        }
-        statsTable->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(bus.getReadRequests())));
-        statsTable->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(bus.getWriteRequests())));
-        statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1").arg(bus.getInvalidations())));
-        statsTable->setItem(0, 3, new QTableWidgetItem(QString("%1 bytes").arg(bus.getDataTransfered())));
-
-        std::cout << "Shared Memory:" << std::endl;
-        sharedMem.displayMemory();
-    });
 
     statsTable->setFixedHeight(statsTable->verticalHeader()->length() + statsTable->horizontalHeader()->height() + statsTable->horizontalHeader()->height());
 
     columnLayout->addWidget(new QLabel("Shared Memory", this));
     columnLayout->addWidget(sharedMemList);
-    columnLayout->addWidget(buttonUpdate);
     columnLayout->addWidget(new QLabel("Bus Interconnect Statistics:", this));
     columnLayout->addWidget(statsTable);
 
     return columnLayout;
+}
+
+void MainWindow::roundRobinSteppingExecute() {
+    if (indexMem < instructionMemories.size()) {
+        if (indexInst[indexMem] < instructionMemories[indexMem].getInstructionCount()){
+            stepping(indexMem, indexInst[indexMem]);
+            ++indexInst[indexMem];
+        } else {
+            ++indexMem;
+            roundRobinSteppingExecute();
+        }
+    } else {
+        indexMem = 0;
+        roundRobinSteppingExecute();
+    }
+}
+
+void MainWindow::staticPrioritySteppingExecute() {
+    if(indexMem < priorityIndex.size()) {
+        if (indexInst[priorityIndex[indexMem]] < instructionMemories[priorityIndex[indexMem]].getInstructionCount()){
+            stepping(priorityIndex[indexMem], indexInst[priorityIndex[indexMem]]);
+            ++indexInst[priorityIndex[indexMem]];
+        } else {
+            ++indexMem;
+            staticPrioritySteppingExecute();
+        }
+    }
+
+}
+
+void MainWindow::stepping(int indexMemory, int indexInstruction) {
+    InstructionMemory& currentInstMem  = instructionMemories[indexMemory];
+    ProcessingElement& currentPE = *pes[indexMemory];
+
+    if (indexInstruction < currentInstMem.getInstructionCount()) {
+        // Obtener la instrucción actual
+        switch (currentInstMem.getInstruction(indexInstruction).inst){
+        case InstructionType::LOAD:
+            currentPE.load(currentInstMem.getInstruction(indexInstruction).reg, currentInstMem.getInstruction(indexInstruction).address);
+            QMetaObject::invokeMethod(this, [this, currentPE, currentInstMem, indexInstruction]() {
+                textFixed->clear();
+                textFixed->setPlaceholderText(QString("PE %1: LOAD REG%2 <- [0x%3]").arg(currentPE.getId()).arg(currentInstMem.getInstruction(indexInstruction).reg).arg(QString("%1").arg(currentInstMem.getInstruction(indexInstruction).address, 0, 16).toUpper()));
+            }, Qt::QueuedConnection);
+            break;
+        case InstructionType::STORE:
+            currentPE.store(currentInstMem.getInstruction(indexInstruction).reg, currentInstMem.getInstruction(indexInstruction).address);
+            QMetaObject::invokeMethod(this, [this, currentPE, currentInstMem, indexInstruction]() {
+                textFixed->clear();
+                textFixed->setPlaceholderText(QString("PE %1: STORE REG%2 -> [0x%3]").arg(currentPE.getId()).arg(currentInstMem.getInstruction(indexInstruction).reg).arg(QString("%1").arg(currentInstMem.getInstruction(indexInstruction).address, 0, 16).toUpper()));
+            }, Qt::QueuedConnection);
+            break;
+        case InstructionType::INC:
+            currentPE.increment(currentInstMem.getInstruction(indexInstruction).reg);
+            QMetaObject::invokeMethod(this, [this, currentPE, currentInstMem, indexInstruction]() {
+                textFixed->clear();
+                textFixed->setPlaceholderText(QString("PE %1: INC  REG%2").arg(currentPE.getId()).arg(currentInstMem.getInstruction(indexInstruction).reg));
+            }, Qt::QueuedConnection);
+            break;
+        case InstructionType::DEC:
+            currentPE.decrement(currentInstMem.getInstruction(indexInstruction).reg);
+            QMetaObject::invokeMethod(this, [this, currentPE, currentInstMem, indexInstruction]() {
+                textFixed->clear();
+                textFixed->setPlaceholderText(QString("PE %1: DEC  REG%2").arg(currentPE.getId()).arg(currentInstMem.getInstruction(indexInstruction).reg));
+            }, Qt::QueuedConnection);
+            break;
+        case InstructionType::JNZ:
+            std::cout << "PE " << currentPE.getId() << " ejecutando instruccion: " << "JNZ" << std::endl;
+            break;
+        default:
+            break;
+        }
+        std::cout << std::endl;
+    }
+}
+
+void MainWindow::updateSystem() {
+    cacheList1->clear(); // Limpiar la lista antes de actualizar
+
+    cacheList1->addItem("Address \t Data");
+
+    std::vector<CacheBlock> blocks = caches[0]->getCacheBlocks();
+
+    int index = 0;
+    for (CacheBlock block : blocks) {
+        cacheList1->addItem(QString("\nBlock [%1]: (%2)").arg(index)
+            .arg(block.state == MESIState::Modified ? "Modified" :
+                    block.state == MESIState::Exclusive ? "Exclusive" :
+                    block.state == MESIState::Shared ? "Shared" : "Invalid"));
+        for (int i = 0;  i < 4; ++i) {
+            cacheList1->addItem(QString("[0x%1] \t %2")
+                .arg(QString("%1").arg(block.tag == 0 ? 0 : block.tag*4 + i, 0, 16).toUpper())
+                .arg(block.data[block.tag*4%4 + i]));
+        }
+        ++index;
+    }
+    statsTable1->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(caches[0]->getCacheMisses())));
+    statsTable1->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(caches[0]->getInvalidations())));
+    statsTable1->setItem(0, 2, new QTableWidgetItem(QString("%1 bytes").arg(caches[0]->getDataTransferred())));
+
+    cacheList2->clear(); // Limpiar la lista antes de actualizar
+
+    cacheList2->addItem("Address \t Data");
+
+    blocks = caches[1]->getCacheBlocks();
+
+    index = 0;
+    for (CacheBlock block : blocks) {
+        cacheList2->addItem(QString("\nBlock [%1]: (%2)").arg(index)
+            .arg(block.state == MESIState::Modified ? "Modified" :
+                    block.state == MESIState::Exclusive ? "Exclusive" :
+                    block.state == MESIState::Shared ? "Shared" : "Invalid"));
+        for (int i = 0;  i < 4; ++i) {
+            cacheList2->addItem(QString("[0x%1] \t %2")
+                .arg(QString("%1").arg(block.tag == 0 ? 0 : block.tag*4 + i, 0, 16).toUpper())
+                .arg(block.data[block.tag*4%4 + i]));
+        }
+        ++index;
+    }
+    statsTable2->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(caches[1]->getCacheMisses())));
+    statsTable2->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(caches[1]->getInvalidations())));
+    statsTable2->setItem(0, 2, new QTableWidgetItem(QString("%1 bytes").arg(caches[1]->getDataTransferred())));
+
+
+    cacheList3->clear(); // Limpiar la lista antes de actualizar
+
+    cacheList3->addItem("Address \t Data");
+
+    blocks = caches[2]->getCacheBlocks();
+
+    index = 0;
+    for (CacheBlock block : blocks) {
+        cacheList3->addItem(QString("\nBlock [%1]: (%2)").arg(index)
+            .arg(block.state == MESIState::Modified ? "Modified" :
+                    block.state == MESIState::Exclusive ? "Exclusive" :
+                    block.state == MESIState::Shared ? "Shared" : "Invalid"));
+        for (int i = 0;  i < 4; ++i) {
+            cacheList3->addItem(QString("[0x%1] \t %2")
+                .arg(QString("%1").arg(block.tag == 0 ? 0 : block.tag*4 + i, 0, 16).toUpper())
+                .arg(block.data[block.tag*4%4 + i]));
+        }
+        ++index;
+    }
+    statsTable3->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(caches[2]->getCacheMisses())));
+    statsTable3->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(caches[2]->getInvalidations())));
+    statsTable3->setItem(0, 2, new QTableWidgetItem(QString("%1 bytes").arg(caches[2]->getDataTransferred())));
+
+    cacheList4->clear(); // Limpiar la lista antes de actualizar
+
+    cacheList4->addItem("Address \t Data");
+
+    blocks = caches[3]->getCacheBlocks();
+
+    index = 0;
+    for (CacheBlock block : blocks) {
+        cacheList4->addItem(QString("\nBlock [%1]: (%2)").arg(index)
+            .arg(block.state == MESIState::Modified ? "Modified" :
+                    block.state == MESIState::Exclusive ? "Exclusive" :
+                    block.state == MESIState::Shared ? "Shared" : "Invalid"));
+        for (int i = 0;  i < 4; ++i) {
+            cacheList4->addItem(QString("[0x%1] \t %2")
+                .arg(QString("%1").arg(block.tag == 0 ? 0 : block.tag*4 + i, 0, 16).toUpper())
+                .arg(block.data[block.tag*4%4 + i]));
+        }
+        ++index;
+    }
+    statsTable4->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(caches[3]->getCacheMisses())));
+    statsTable4->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(caches[3]->getInvalidations())));
+    statsTable4->setItem(0, 2, new QTableWidgetItem(QString("%1 bytes").arg(caches[3]->getDataTransferred())));
+
+    sharedMemList->clear(); // Limpiar la lista antes de actualizar
+
+    sharedMemList->addItem("Address \t Data");
+
+    std::vector<uint64_t> memory = sharedMem.getWholeMemory();
+    index = 0;
+    for (uint64_t mem : memory) {
+        sharedMemList->addItem(QString("[0x%1] \t %2 ")
+            .arg(QString("%1").arg(index, 0, 16).toUpper())
+            .arg(mem));
+        ++index;
+    }
+    statsTable->setItem(0, 0, new QTableWidgetItem(QString("%1").arg(bus.getReadRequests())));
+    statsTable->setItem(0, 1, new QTableWidgetItem(QString("%1").arg(bus.getWriteRequests())));
+    statsTable->setItem(0, 2, new QTableWidgetItem(QString("%1").arg(bus.getInvalidations())));
+    statsTable->setItem(0, 3, new QTableWidgetItem(QString("%1 bytes").arg(bus.getDataTransfered())));
+}
+
+void MainWindow::clearSystem() {
+    sharedMem.clear();
+    caches[0]->clear();
+    caches[1]->clear();
+    caches[2]->clear();
+    caches[3]->clear();
+    instructionMemories[0].clear();
+    instructionMemories[1].clear();
+    instructionMemories[2].clear();
+    instructionMemories[3].clear();
+    bus.clear();
+    pes[0]->clear();
+    pes[1]->clear();
+    pes[2]->clear();
+    pes[3]->clear();
+
+    indexMem = 0;
+    indexInst = {0, 0, 0, 0};
+
+    textFixed->clear();
+    textFixed->setPlaceholderText("Executed Instruction");
+
+    updateSystem();
 }

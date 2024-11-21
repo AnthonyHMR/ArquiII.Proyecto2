@@ -47,8 +47,33 @@ private:
     Compiler compiler;
     BusInterconnect& bus;
 
-    size_t peValue;
+    int peValue = 0;
     int schemeValue;
+    int indexMem = 0;
+    std::vector<int> indexInst = {0, 0, 0, 0};
+    std::vector<int> priorityIndex = {2, 0, 1, 3};
+
+    void roundRobinSteppingExecute();
+    void staticPrioritySteppingExecute();
+    void stepping(int indexMemory, int indexInstruction);
+
+    void updateSystem();
+    void clearSystem();
+
+    QPlainTextEdit *textFixed = new QPlainTextEdit(this);
+
+
+    QListWidget *cacheList1 = new QListWidget(this);
+    QTableWidget *statsTable1 = new QTableWidget(1, 3, this);
+    QListWidget *cacheList2 = new QListWidget(this);
+    QTableWidget *statsTable2 = new QTableWidget(1, 3, this);
+    QListWidget *cacheList3 = new QListWidget(this);
+    QTableWidget *statsTable3 = new QTableWidget(1, 3, this);
+    QListWidget *cacheList4 = new QListWidget(this);
+    QTableWidget *statsTable4 = new QTableWidget(1, 3, this);
+
+    QListWidget *sharedMemList = new QListWidget(this);
+    QTableWidget *statsTable = new QTableWidget(1, 4, this);
 };
 
 #endif // MAINWINDOW_H

@@ -32,6 +32,7 @@ void BusInterconnect::processReadRequest(size_t sourcePE, uint64_t address) {
             sourceCache = cache;
             uint64_t data = cache->read(address);
             if (data != -1) { // If data is valid in cache
+                cache->setDataTransferred(data);
                 ++readResponses;
                 dataTransferred += sizeof(data);
                 std::cout << "PE " << sourcePE << " read address " << address << ", data: " << data << " from cache." << std::endl;

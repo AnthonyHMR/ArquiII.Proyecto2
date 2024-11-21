@@ -25,5 +25,6 @@ size_t InstructionMemory::getPEId() const {
 }
 
 void InstructionMemory::clear () {
-    std::fill(instructions.begin(), instructions.end(), instruction(InstructionType::LOAD, 0, 0));
+    instructions.clear();
 }
+

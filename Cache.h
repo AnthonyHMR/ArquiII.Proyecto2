@@ -49,6 +49,9 @@ public:
     int getCacheMisses() const;
     int getInvalidations() const;
     size_t getDataTransferred() const;
+
+    void setDataTransferred(uint64_t data_transfered);
+
     int getPEId() const;
 
     void clear();

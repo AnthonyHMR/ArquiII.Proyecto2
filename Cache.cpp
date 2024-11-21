@@ -154,6 +154,10 @@ size_t Cache::getDataTransferred() const {
     return dataTransferred;
 }
 
+void Cache::setDataTransferred(uint64_t data_transfered) {
+    dataTransferred += sizeof(data_transfered);
+}
+
 void Cache::clear()
 {
     std::fill(blocks.begin(), blocks.end(), CacheBlock());
