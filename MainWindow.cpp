@@ -54,8 +54,6 @@ QVBoxLayout* MainWindow::createColumn1() {
 
     auto *buttonLayout = new QHBoxLayout();
 
-    auto *button1 = new QPushButton("Compile", this);
-    auto *button2 = new QPushButton("Execute", this);
     auto *button3 = new QPushButton("Stepping", this);
 
     buttonLayout->addWidget(button1);
@@ -104,7 +102,7 @@ QVBoxLayout* MainWindow::createColumn1() {
         } else {QMessageBox::information(this, "Warning!", "Choose a scheme scheduling to execute the instructions.");}
     });
 
-    connect(button3, &QPushButton::clicked, this, [this, button2, button1]()
+    connect(button3, &QPushButton::clicked, this, [this]()
     {
         button2->setEnabled(false);
         button1->setEnabled(false);
@@ -460,4 +458,7 @@ void MainWindow::clearSystem() {
     textFixed->setPlaceholderText("Executed Instruction");
 
     updateSystem();
+
+    button2->setEnabled(true);
+    button1->setEnabled(true);
 }

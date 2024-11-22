@@ -63,6 +63,9 @@ private:
     QPlainTextEdit *textFixed = new QPlainTextEdit(this);
 
 
+    QPushButton *button1 = new QPushButton("Compile", this);
+    QPushButton *button2 = new QPushButton("Execute", this);
+
     QListWidget *cacheList1 = new QListWidget(this);
     QTableWidget *statsTable1 = new QTableWidget(1, 3, this);
     QListWidget *cacheList2 = new QListWidget(this);
