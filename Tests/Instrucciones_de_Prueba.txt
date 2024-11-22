@@ -1,0 +1,109 @@
+FALSE SHARING Test
+(Static Priority)
+PE3
+INC REG1
+STORE REG1 12
+
+PE1
+INC REG2
+INC REG2
+STORE REG2 13
+
+PE3
+LOAD REG2 12
+
+PE3: 2 Misses 1 Invalidación 72 bytes transferidos
+------------------
+Solucion (padding)
+PE3
+INC REG1
+STORE REG1 12
+
+PE1
+INC REG2
+INC REG2
+STORE REG2 16
+
+PE3
+LOAD REG2 12
+
+PE3: 1 Miss 0 Invalidaciones 48 bytes transferidos
+==============================
+
+FALSE SHARING Test2
+(Round-Robin)
+PE1
+INC REG1
+STORE REG1 16
+LOAD REG2 16
+INC REG2
+STORE REG2 20
+
+PE2
+INC REG1
+LOAD REG1 20
+
+PE4
+LOAD REG0 8
+INC REG0
+STORE REG0 18
+
+PE1: 2 Misses 1 Invalidación 88 bytes transferidos
+------------------
+Solucion (local pe updates)
+PE1
+INC REG1
+INC REG1
+STORE REG1 20
+
+PE 2
+INC REG1
+LOAD REG1 20
+
+PE4
+LOAD REG0 8
+INC REG0
+STORE REG0 18
+
+PE1: 1 Miss 0 Invalidaciones 40 bytes transferidos
+==============================
+
+Write-Back/FIFO Test
+LOAD REG0 8
+INC REG1
+STORE REG1 12
+INC REG1
+INC REG1
+STORE REG1 16
+INC REG1
+STORE REG1 20
+STORE REG1 24
+STORE REG1 4
+INC REG1
+STORE REG1 28
+INC REG1
+STORE REG1 32
+LOAD REG0 36
+LOAD REG0 8
+
+==============================
+
+Saltos Test y Store/Load Test
+PE2
+LOAD REG1 20
+
+PE3
+INC REG2
+JNZ [_label]
+LOAD REG0 8
+INC REG1
+STORE REG1 12
+
+_label:
+STORE REG2 14
+INC REG2
+JNZ [_label2]
+DEC REG2
+
+_label2:
+STORE REG2 20
